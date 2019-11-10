@@ -1,4 +1,4 @@
-import Boot from '../../src/boot.js';
+import Boot from '../../../src/boot.js';
 
 const TemplateConstants = {
     STYLE: 'style',

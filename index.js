@@ -1,3 +1,4 @@
+//!/usr/bin/env node
 let action = process.argv[2];
 let name = process.argv[3];
 let option = process.argv[4];
@@ -14,7 +15,6 @@ if(action) {
     switch(action) {
         case 'create' : 
             project(name); break;
-            break;
         case 'component' : 
             component(name, option); break;
         case 'help' :

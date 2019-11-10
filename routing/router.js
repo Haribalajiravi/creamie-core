@@ -1,4 +1,4 @@
-import RouteConfig from '../../src/routeConfig.js'
+import RouteConfig from '../../../src/routeConfig';
 
 export default class Router {
 
@@ -10,7 +10,7 @@ export default class Router {
     _init() {
         let _this = this;
         window.onpopstate = () => {
-            this.render(this.getCurrentPath());
+            _this.render(_this.getCurrentPath());
         }
     }
 

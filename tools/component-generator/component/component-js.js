@@ -1,4 +1,4 @@
-const Utils = require('../Utils.js');
+const Utils = require('../../../utils/Utils');
 
 var JS = {
     get: (name) => {
