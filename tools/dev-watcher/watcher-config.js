@@ -6,11 +6,10 @@ VarConfig = {
     var: 'boot.js',
     getAllFiles: function (currentDirPath, extension, callback) {
         fs.readdirSync(currentDirPath).forEach(function (name) {
-            name = name.toLowerCase();
             var filePath = path.join(currentDirPath, name);
             var stat = fs.statSync(filePath);
             if (stat.isFile() && new RegExp(`.*\.(${extension})`).test(name) && !VarConfig.ignore.includes(name)) {
-                callback({ path: filePath, filename: name });
+                callback({ path: filePath, filename: name.toLowerCase() });
             } else if (stat.isDirectory()) {
                 VarConfig.getAllFiles(filePath, extension, callback);
             }

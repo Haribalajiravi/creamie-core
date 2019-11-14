@@ -1,8 +1,7 @@
-import RouteConfig from '../../../src/routeConfig';
-
 export default class Router {
 
-    constructor() {
+    constructor(routes) {
+        this.routes = routes;
         this.tag = 'route-let';
         this.render(this.getCurrentPath());
     };
@@ -15,9 +14,10 @@ export default class Router {
     }
 
     render(path) {
-        if (RouteConfig['**'] && !RouteConfig[path]) {
+        let _this = this;
+        if (_this.routes['**'] && !_this.routes[path]) {
             document.querySelector('body').innerHTML = '';
-            document.querySelector('body').appendChild(document.createElement(RouteConfig['**'].tag));
+            document.querySelector('body').appendChild(document.createElement(_this.routes['**'].tag));
         } else {
             let routeLet = document.querySelector(this.tag);
             routeLet.appendChild(this.getElement(path));
@@ -30,8 +30,9 @@ export default class Router {
     }
 
     getElement(path) {
+        let _this = this;
         let routePath = (path) ? path : this.getCurrentPath();
-        return (RouteConfig[routePath]) ? document.createElement(RouteConfig[routePath].tag) : this.errorPage();
+        return (_this.routes[routePath]) ? document.createElement(_this.routes[routePath].tag) : this.errorPage();
     }
 
     errorPage() {

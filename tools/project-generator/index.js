@@ -7,8 +7,8 @@ const projectGenerator = (name) => {
         if (err) {
             console.log('Install git and try again!');
         } else {
-            console.log(`stdout: ${stdout}`);
-            console.log(`stderr: ${stderr}`);
+            console.log(`${stdout}`);
+            console.log(`${stderr}`);
         }
     });
 }
