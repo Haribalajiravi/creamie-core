@@ -1,6 +1,6 @@
 {
   "name": "creamie",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
   "main": "creamie.js",
   "scripts": {
@@ -19,5 +19,8 @@
     "creamie": "tools/index.js"
   },
   "author": "Haribalaji R (haribalajiravi@gmail.com)",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "node-watch": "^0.6.3"
+  }
 }

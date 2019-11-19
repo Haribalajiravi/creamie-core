@@ -15,10 +15,10 @@ export default class Router {
 
     render(path) {
         let _this = this;
-        if (_this.routes['**'] && !_this.routes[path]) {
+        if (_this.routes['**'] && !_this.routes[path] && path != '/') {
             document.querySelector('body').innerHTML = '';
             document.querySelector('body').appendChild(document.createElement(_this.routes['**'].tag));
-        } else {
+        } else if (_this.routes[path]) {
             let routeLet = document.querySelector(this.tag);
             routeLet.appendChild(this.getElement(path));
         }

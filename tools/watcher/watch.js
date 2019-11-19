@@ -1,4 +1,4 @@
-var fs = require('fs');
+var watch = require('node-watch');
 var VarConfig = require('./watcher-config.js');
 var avoidEventFlag = 0;
 
@@ -6,9 +6,9 @@ var avoidMultipleEvents = function () {
     avoidEventFlag = avoidEventFlag ^ 1;
 }
 
-var watch = function() {
+var watcher = function() {
     VarConfig.generate();
-    fs.watch('src', {
+    watch('src', {
         recursive: true
     }, function (event, filename) {
         if (!avoidEventFlag && /\.(html|css)$/.test(filename)) {
@@ -21,4 +21,4 @@ var watch = function() {
     });
 };
 
-module.exports = watch;
+module.exports = watcher;
