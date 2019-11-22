@@ -1,28 +1,28 @@
 {
-  "name": "creamie",
-  "version": "1.1.4",
-  "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
-  "main": "creamie.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "js-framework",
-    "framework",
-    "javascript",
-    "frontend",
-    "routing",
-    "components",
-    "binding"
-  ],
-  "bin": {
-    "creamie": "tools/index.js"
-  },
-  "author": "Haribalaji R (haribalajiravi@gmail.com)",
-  "license": "ISC",
-  "devDependencies": {
-    "node-watch": "^0.6.3",
-    "rimraf": "^3.0.0"
-  },
-  "dependencies": {}
+    "name": "creamie",
+    "version": "1.1.5",
+    "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
+    "main": "creamie.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "js-framework",
+        "framework",
+        "javascript",
+        "frontend",
+        "routing",
+        "components",
+        "binding"
+    ],
+    "bin": {
+        "creamie": "tools/index.js"
+    },
+    "author": "Haribalaji R (haribalajiravi@gmail.com)",
+    "license": "ISC",
+    "devDependencies": {
+        "node-watch": "^0.6.3",
+        "rimraf": "^3.0.0"
+    },
+    "dependencies": {}
 }
