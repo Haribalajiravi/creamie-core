@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const Utils = {
     capitalize: (s) => {
         if (typeof s !== 'string') return ''
