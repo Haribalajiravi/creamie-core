@@ -1,4 +1,4 @@
-import Boot from '../../../src/boot';
+import Boot from '../../creamie-project/src/boot';
 
 const TemplateConstants = {
     STYLE: 'style',

@@ -1,4 +1,4 @@
-import Binder from './binding/binder';
+import Binder from './binder';
 import Template from './template/template';
 
 export default class Creamie extends HTMLElement {
@@ -11,24 +11,19 @@ export default class Creamie extends HTMLElement {
         }) : this;
         let template = new Template(this.component.template, this.component.style);
         this.DOM.appendChild(template.get());
-        this.binder = new Binder(this.component.binder, this.DOM); 
+        this.binder = new Binder(this.component.binder, this.DOM);
         this.data = this.binder.get();
-        console.log("Constructor");
     }
 
-    static get observedAttributes() {
-    }
+    static get observedAttributes() {}
 
     disconnectedCallback() {
-        this.data = this.binder.free();
-        console.log('disconnected!');
+        this.binder.free();
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
         console.log(`Attribute: ${name} - ${newVal} - ${oldVal} changed!`);
     }
 
-    adoptedCallback() {
-        console.log('adopted!');
-    }
+    adoptedCallback() {}
 }

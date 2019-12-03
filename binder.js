@@ -1,6 +1,6 @@
 export default class Binder {
 
-    constructor(bindAttribute , customElement, callbackToDOM) {
+    constructor(bindAttribute, customElement, callbackToDOM) {
         this.scopes = {}
         this.bindAttribute = bindAttribute || 'bind-data'
         this.DOM = customElement
@@ -10,7 +10,7 @@ export default class Binder {
             let property = element.getAttribute(_this.bindAttribute)
             _this.addScopes(property, callbackToDOM)
             if (element.type === 'text' || element.type === 'textarea') {
-                element.onkeyup = function () {
+                element.onkeyup = function() {
                     _this.scopes[property] = element.value
                 }
             }
@@ -22,7 +22,7 @@ export default class Binder {
         if (!_this.scopes.hasOwnProperty(property)) {
             let currentValue;
             Object.defineProperty(_this.scopes, property, {
-                set: function (newValue) {
+                set: function(newValue) {
                     currentValue = newValue
                     let elements = _this.DOM.querySelectorAll(`[${_this.bindAttribute}]`)
                     elements.forEach((element) => {
@@ -38,7 +38,7 @@ export default class Binder {
                         }
                     })
                 },
-                get: function () {
+                get: function() {
                     return currentValue;
                 },
                 enumerable: true
@@ -47,7 +47,7 @@ export default class Binder {
     }
 
     free() {
-        return {};
+        this.scopes = {};
     }
 
     get() {
