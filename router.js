@@ -1,4 +1,4 @@
-import Routes from '../creamie-project/src/routes';
+import Routes from '../../src/routes';
 
 export default class Router {
 
