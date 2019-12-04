@@ -1,5 +1,5 @@
 import Binder from './binder';
-import Template from './template/template';
+import Template from './template';
 
 export default class Creamie extends HTMLElement {
 

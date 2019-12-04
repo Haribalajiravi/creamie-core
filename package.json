@@ -16,12 +16,11 @@
         "binding"
     ],
     "bin": {
-        "creamie": "tools/index.js"
+        "creamie": "creamie-cli/index.js"
     },
     "author": "Haribalaji R (haribalajiravi@gmail.com)",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
-        "loading-cli": "^1.1.0",
         "node-watch": "^0.6.3",
         "rimraf": "^3.0.0"
     }
