@@ -1,6 +1,6 @@
 {
     "name": "creamie",
-    "version": "1.2.0",
+    "version": "1.2.3",
     "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
     "main": "creamie.js",
     "scripts": {
@@ -17,6 +17,9 @@
         "components",
         "binding"
     ],
+    "bin": {
+        "creamie": "index.js"
+    },
     "author": "Haribalaji R (haribalajiravi@gmail.com)",
     "license": "MIT"
 }
