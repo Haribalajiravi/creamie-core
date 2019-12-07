@@ -7,6 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "keywords": [
+        "creamie",
+        "creamie js",
         "js-framework",
         "framework",
         "javascript",
@@ -15,13 +17,6 @@
         "components",
         "binding"
     ],
-    "bin": {
-        "creamie": "creamie-cli/index.js"
-    },
     "author": "Haribalaji R (haribalajiravi@gmail.com)",
-    "license": "MIT",
-    "dependencies": {
-        "node-watch": "^0.6.3",
-        "rimraf": "^3.0.0"
-    }
+    "license": "MIT"
 }
