@@ -1,10 +1,11 @@
 {
     "name": "creamie",
-    "version": "1.2.4",
+    "version": "1.2.5",
     "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
     "main": "creamie.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+        "test-server": "node tests/boot-runner.js && http-server"
     },
     "keywords": [
         "creamie",
@@ -21,5 +22,10 @@
         "creamie": "index.js"
     },
     "author": "Haribalaji R (haribalajiravi@gmail.com)",
-    "license": "MIT"
+    "license": "MIT",
+    "devDependencies": {
+        "creamie-watcher": "0.0.4",
+        "http-server": "^0.12.1",
+        "testcafe": "^1.8.1"
+    }
 }

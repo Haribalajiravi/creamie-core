@@ -1,4 +1,4 @@
-import Routes from '../../src/routes';
+import Routes from '../../src/routes.js';
 
 export default class Router {
 

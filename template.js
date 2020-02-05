@@ -1,5 +1,3 @@
-import Boot from '../../src/boot';
-
 const TemplateConstants = {
     STYLE: 'style',
     TYPE: 'text/html'
@@ -7,18 +5,18 @@ const TemplateConstants = {
 
 export default class Template {
 
-    constructor(template, style) {
+    constructor(template, style, boot) {
         this.template = template;
         this.style = style;
+        this.boot = boot;
     }
 
     getHTML() {
-        console.log(this.template);
-        return Boot[this.template];
+        return this.boot[this.template];
     }
 
     getCSS() {
-        return Boot[this.style];
+        return this.boot[this.style];
     }
 
     get() {

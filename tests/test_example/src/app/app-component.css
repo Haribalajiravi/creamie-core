@@ -1,0 +1,31 @@
+.sample {
+    background: #fff;
+    border: 1px solid #efefef;
+    border-radius: 2px;
+    padding: 10px;
+    margin: auto;
+    text-align: center;
+    width: 20%;
+    margin-top: 5%;
+}
+
+.creamieFont {
+    font-size: 24pt;
+    font-weight: bold;
+    color: #945f31;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.version {
+    padding: 3px;
+    background: #e8e8e8;
+    color: #6b6b6b;
+    display: inline-block;
+    text-align: center;
+    width: 65px;
+    margin-top: 10px;
+    border-radius: 3px;
+    font-family: monospace;
+}

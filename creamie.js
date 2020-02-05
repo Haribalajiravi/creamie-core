@@ -1,5 +1,5 @@
-import Binder from './binder';
-import Template from './template';
+import Binder from './binder.js';
+import Template from './template.js';
 
 export default class Creamie extends HTMLElement {
 
@@ -9,7 +9,7 @@ export default class Creamie extends HTMLElement {
         this.DOM = (this.component.isShadowDom) ? this._shadowRoot = this.attachShadow({
             'mode': this.component.shadowMode
         }) : this;
-        let template = new Template(this.component.template, this.component.style);
+        let template = new Template(this.component.template, this.component.style, this.component.boot);
         this.DOM.appendChild(template.get());
         this.binder = new Binder(this.component.binder, this.DOM);
         this.data = this.binder.get();
