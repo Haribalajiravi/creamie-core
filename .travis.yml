@@ -1,9 +1,7 @@
 dist: trusty
 os: linux
 language: node_js
-node_js:
-- node
-- '9'
+node_js: stable
 addons:
   chrome: stable
   firefox: latest

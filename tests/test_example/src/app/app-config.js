@@ -1,4 +1,4 @@
-import Boot from './../../boot.js';
+import Boot from './app-boot.js';
 
 export default {
     template: `app-component.html`,

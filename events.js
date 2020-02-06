@@ -1,7 +1,8 @@
 export default class Events {
-    constructor(events) {
-        this.events = events;
-        this.eventAttributes = {
+    constructor(dom) {
+        this.dom = (dom) ? dom : document;
+        this.eventAttribute = 'e';
+        this.domevents = {
             afterprint: 'onafterprint',
             beforeprint: 'onbeforeprint',
             beforeunload: 'onbeforeunload',
@@ -75,5 +76,33 @@ export default class Events {
             waiting: 'onwaiting',
             toggle: 'ontoggle'
         }
+    }
+
+    init(methods) {
+        let _this = this;
+        let elements = _this.dom.querySelectorAll(`[${_this.eventAttribute}]`);
+        elements.forEach((element) => {
+            let values = element.getAttribute(_this.eventAttribute).split(':');
+            let eventName = values[0];
+            let methodName = values[1];
+            if(_this.domevents[eventName] && methods && methods[methodName]) {
+                element[_this.domevents[eventName]] = methods[methodName];
+            } else {
+                if(!_this.domevents[eventName]) {
+                    throw _this.getError('NO_EVENT_FOUND', eventName);
+                }
+                if(!methods[methodName]) {
+                    throw _this.getError('NO_METHOD_FOUND', methodName);
+                }
+            }
+        });
+    }
+
+    getError(key, name) {
+        let errors = {
+            NO_EVENT_FOUND: `There is no event called '${name}'`,
+            NO_METHOD_FOUND: `There is no method called '${name}'`
+        };
+        return `Error[creamie]: ${errors[key]}`;
     }
 }
