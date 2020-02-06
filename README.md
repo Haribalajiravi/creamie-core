@@ -1,4 +1,5 @@
 ##Creamie (Javascript Framework)
+[![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie)
 
 use below command to install framework
 
