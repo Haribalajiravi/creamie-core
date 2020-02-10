@@ -9,8 +9,8 @@ test('Binder: input value reflection in dom', async t => {
         .expect(Selector('#binder-reflecter').innerText).eql('creamie');
 });
 
-test('Events: click event', async t => {
-    await t
-        .click('#event-click')
-        .expect(Selector('#binder-reflecter').innerText).eql('Data Changed');
-});
+// test('Events: click event', async t => {
+//     await t
+//         .click('#event-click')
+//         .expect(Selector('#binder-reflecter').innerText).eql('Data Changed');
+// });
