@@ -4,7 +4,8 @@
     "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
     "main": "creamie.js",
     "scripts": {
-        "test": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+        "test": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+        "test-headed": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
         "test-server": "node tests/boot-runner.js && http-server"
     },
     "keywords": [
