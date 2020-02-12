@@ -19,10 +19,10 @@ To use this as library try below command:
 
 ## Feature currently available
 
-1. Web components & Custom elements
-2. Two Binder (Binding between DOM & Object)
-3. Router
-4. Events
+1. [Web components & Custom elements](#web-components)
+2. [Two Binder (Binding between DOM & Object)](#binder)
+3. [Router](#router)
+4. [Events](#events)
 
 ### Web components
 
