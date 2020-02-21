@@ -1,12 +1,11 @@
-import Routes from '../../src/routes.js';
-
 export default class Router {
 
-    constructor(name) {
+    constructor(name, routes) {
         this.tag = name;
         this.params = {};
         this.errorParam = '**';
         this.routeAttribute = 'route-to';
+        this.Routes = routes;
     };
 
     init() {
@@ -26,9 +25,9 @@ export default class Router {
     render(path, params = {}) {
         let _this = this;
         let matchedPath = this.matchPath(path);
-        if (Routes[this.errorParam] && !matchedPath || matchedPath == this.errorParam) {
+        if (_this.Routes[this.errorParam] && !matchedPath || matchedPath == this.errorParam) {
             document.querySelector('body').innerHTML = '';
-            document.querySelector('body').appendChild(new Routes[this.errorParam]());
+            document.querySelector('body').appendChild(new _this.Routes[this.errorParam]());
         } else if (matchedPath) {
             let routeLet = document.querySelector(_this.tag);
             routeLet.innerHTML = '';
@@ -59,7 +58,7 @@ export default class Router {
     matchPath(path) {
         let absolutePaths = path.split('/');
         absolutePaths.shift();
-        let routes = Object.keys(Routes);
+        let routes = Object.keys(this.Routes);
         for (let i = 0; i < routes.length; i++) {
             let route = routes[i];
             let paths = route.split('/');
@@ -82,9 +81,8 @@ export default class Router {
     }
 
     getElement(path) {
-        let _this = this;
         let routePath = (path) ? path : this.getCurrentPath();
-        return (Routes[routePath]) ? new Routes[routePath]() : _this.errorPage();
+        return (this.Routes[routePath]) ? new this.Routes[routePath]() : this.errorPage();
     }
 
     errorPage() {

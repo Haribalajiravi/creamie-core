@@ -18,6 +18,7 @@ export default class Creamie extends HTMLElement {
     }
 
     disconnectedCallback() {
+        this.events.removeListeners();
         this.binder.free();
     }
 
