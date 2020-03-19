@@ -4,6 +4,10 @@
 
 [![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie) [![CodeFactor](https://www.codefactor.io/repository/github/haribalajiravi/creamie/badge/master)](https://www.codefactor.io/repository/github/haribalajiravi/creamie/overview/master) [![version](https://img.shields.io/npm/v/creamie.svg)](https://www.npmjs.com/package/creamie) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Gitter](https://badges.gitter.im/creamie-cli/community.svg)](https://gitter.im/creamie-cli/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+If you find this framework more useful
+
+[![Buy me a coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/7xcFqmn)
+
 It is a front-end javascript bundle which you can import in your client project.
 
 To use this as library try below command:
@@ -230,6 +234,10 @@ index.html:
 </body>
 </html>
 ```
+
+## Contributors
+- [HBR](https://twitter.com/haribalaji_o_0)
+- [Ahilesh](https://twitter.com/KumarAhilesh)
 
 ## Copyrights
 (c) 2020, [Haribalaji Raviprakash](https://twitter.com/haribalajiravi1)
