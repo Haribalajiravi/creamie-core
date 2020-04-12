@@ -1,5 +1,3 @@
-# Creamie
-
 ![Creamie javascript framework which is purely based on web components lifecycle](https://raw.githubusercontent.com/Haribalajiravi/creamie/master/creamie.png)
 
 [![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie) [![CodeFactor](https://www.codefactor.io/repository/github/haribalajiravi/creamie/badge/master)](https://www.codefactor.io/repository/github/haribalajiravi/creamie/overview/master) [![Gitter](https://badges.gitter.im/creamie-cli/community.svg)](https://gitter.im/creamie-cli/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
