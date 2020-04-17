@@ -12,7 +12,14 @@ export default class Creamie extends HTMLElement {
         }) : this;
         let template = new Template(this.component.template, this.component.style, this.component.boot);
         this.dom.appendChild(template.get());
-        this.binder = new Binder(this.component.binder, this.dom);
+        this.binder = new Binder({
+            bindAttribute: this.component.binder,
+            customElement: this.dom,
+            getterMethods: component.getterMethods,
+            setterMethods: component.setterMethods,
+            destroyMethods: component.destroyMethods,
+            excludePlugins: component.excludePlugins
+        });
         this.data = this.binder.get();
         this.events = new Events(this.dom);
     }

@@ -42,10 +42,10 @@ export default class Events {
     }
 
     removeListeners() {
-        let _this = this
+        let _this = this;
         Object.keys(_this.eventsCache).forEach((event) => {
             _this.dom.removeEventListener(event, _this.eventsCache[event]);
-        })
+        });
     }
 
     getError(key, name) {
