@@ -1,5 +1,5 @@
-import TextField from './plugins/textfield';
-import Select from './plugins/select';
+import TextField from './plugins/textfield.js';
+import Select from './plugins/select.js';
 
 class PluginConnector {
 

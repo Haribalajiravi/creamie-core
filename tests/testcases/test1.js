@@ -14,3 +14,9 @@ test('Events: click event', async t => {
         .click('#event-click')
         .expect(Selector('#binder-reflecter').innerText).eql('Data Changed');
 });
+
+test('Plugins: checkbox iwth binder', async t => {
+    await t
+        .click('#checker')
+        .expect(Selector('#checker-reflector').innerText).eql('true');
+});

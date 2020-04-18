@@ -1,4 +1,4 @@
-import PluginConnector from './pluginConnector';
+import PluginConnector from './pluginConnector.js';
 
 export default class Binder {
 
@@ -13,6 +13,7 @@ export default class Binder {
         this.scopes = {};
         this.domCache = null;
         this.dataCache = {};
+        this.getterMethods = (Array.isArray(getterMethods) && getterMethods.length) ? getterMethods : [];
         this.setterMethods = (Array.isArray(setterMethods) && setterMethods.length) ? setterMethods : [];
         this.destroyMethods = (Array.isArray(destroyMethods) && destroyMethods.length) ? destroyMethods : [];
         this.pluginConnector = new PluginConnector({
@@ -31,18 +32,17 @@ export default class Binder {
                 _this.weakmap.set(element, property);
                 _this.addScopes(property);
 
-                // Plugin connector will come here
                 if (_this.pluginConnector.isMatched({
                     element: element,
                     property: property,
                     type: 'getter',
                 })) {
                     _this.pluginConnector.getter();
-                } if (Array.isArray(getterMethods) && getterMethods.length) {
-                    for (let i = 0; i < getterMethods.length; i++) {
+                } else {
+                    for (let i = 0; i < _this.getterMethods.length; i++) {
                         _this.dataCache[property] = {};
                         try {
-                            let getterObj = getterMethods[i]({
+                            let getterObj = _this.getterMethods[i]({
                                 element: element,
                                 data: _this.scopes,
                                 property: property,
@@ -82,7 +82,7 @@ export default class Binder {
                                 oldValue: _this.scopes[property],
                             })) {
                                 _this.pluginConnector.setter();
-                            } else if (Array.isArray(_this.setterMethods) && _this.setterMethods.length) {
+                            } else {
                                 let passed = _this.ladderExecutor({
                                     currentValue: currentValue,
                                     element: element,
