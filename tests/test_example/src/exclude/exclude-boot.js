@@ -1,0 +1,1 @@
+export default {"exclude-component.html":"<input type=\"checkbox\" data=\"checker\" id=\"checker\" /><label for=\"checker\">Checkbox test</label><div data=\"checker\" id=\"checker-reflector\"></div><div>    <input type=\"text\" data=\"name\" id=\"textfield\" />    <div data=\"name\" id=\"textfield-reflector\">nodata</div></div>","exclude-component.css":""}

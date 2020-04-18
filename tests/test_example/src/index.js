@@ -1,2 +1,2 @@
 import App from './app/app-component.js';
-import Plugins from './plugins/plugins-component.js';
+import Exclude from './exclude/exclude-component.js';

@@ -1,14 +1,20 @@
 
-import Boot from './plugins-boot.js';
+import Boot from './exclude-boot.js';
+import TextField from './../../../../plugins/textfield.js';
+import Select from './../../../../plugins/select.js';
 
 export default {
-    template: `plugins-component.html`,
-    style: `plugins-component.css`,
-    tag: 'plugins-component',
+    template: `exclude-component.html`,
+    style: `exclude-component.css`,
+    tag: 'exclude-component',
     isShadowDom: false,
     shadowMode: 'open',
     binder: 'data',
     boot: Boot,
+    excludePlugins: [
+        TextField,
+        Select
+    ],
     getterMethods: [
         ({element, property, data}) => {
             return {

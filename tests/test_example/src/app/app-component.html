@@ -7,7 +7,17 @@
     <div>
         <button id="event-click" e="click:changeData">Click me!</button>
     </div>
+    <div>
+        <a route-to="/tester" id="router-test">test</a>
+        <a route-to="/test/creamie" id="router-test-creamie">test/creamie</a>
+        <button id="get-router-param" e="click:setRouterParam">get router param</button>
+        <div data="routerId" id="router-param-reflector"></div>
+        <route-app></route-app>
+    </div>
 </div>
 <div class="sample">
     <plugins-component></plugins-component>
+</div>
+<div class="sample">
+    <exclude-component></exclude-component>
 </div>
