@@ -6,7 +6,8 @@
     "scripts": {
         "test": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
         "test-headed": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
-        "test-server": "node tests/boot-runner.js && http-server"
+        "test-server": "node tests/boot-runner.js && http-server",
+        "test-standalone": "testcafe chrome,firefox tests/testcases/"
     },
     "keywords": [
         "creamie",
