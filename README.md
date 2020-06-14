@@ -54,7 +54,7 @@ export default {
 App.js:
 
 ```javascript
-import Creamie from 'creamie';
+import Creamie from '@creamie/core';
 import  AppConfig  from  './appConfig.js';
 
 class App extends Creamie {
@@ -107,7 +107,7 @@ In your component html try will below code:
 App.js:
 
 ```javascript
-import Creamie from 'creamie';
+import Creamie from '@creamie/core';
 import  AppConfig  from  './appConfig.js';
 
 class App extends Creamie {
@@ -137,7 +137,7 @@ Example:
 App.js:
 
 ```javascript
-import Creamie from 'creamie';
+import Creamie from '@creamie/core';
 import  AppConfig  from  './appConfig.js';
 import Router from 'creamie/router.js';
 import Home from './home.js';
@@ -193,7 +193,7 @@ Example:
 App.js:
 
 ```javascript
-import Creamie from 'creamie';
+import Creamie from '@creamie/core';
 import  AppConfig  from  './appConfig.js';
 
 class App extends Creamie {
