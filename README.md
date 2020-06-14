@@ -12,14 +12,14 @@ It is a front-end javascript bundle which you can import in your client project.
 
 To use this as library try below command:
 
-```npm install creamie```
+```npm install @creamie/core```
 
  If you don't want to create project manually, we'll recommend you to install [creamie-cli](https://www.npmjs.com/package/creamie-cli) globally. 
  [Read more](https://github.com/Haribalajiravi/creamie-cli/blob/master/README.md) to access auto-project generation CLI tool.
 
 ## Check out official framework docs below
 
-**[https://creamie.now.sh](https://creamie.now.sh/)**
+**[https://creamie.io](https://creamie.io/)**
 
 ## Feature currently available
 
