@@ -236,8 +236,8 @@ index.html:
 ```
 
 ## Contributors
-- [HBR](https://twitter.com/haribalaji_o_0)
-- [Ahilesh](https://twitter.com/KumarAhilesh)
+- [HBR](https://twitter.com/haribalaji_o_0) (Developer)
+- [Ahilesh](https://twitter.com/KumarAhilesh) (Content Writer)
 
 ## Example
 - [Checklist app](https://github.com/Haribalajiravi/creamie-checklist-example)
