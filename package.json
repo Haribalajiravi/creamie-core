@@ -1,7 +1,7 @@
 {
-    "name": "creamie",
-    "version": "1.3.6",
-    "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Image rendering etc...",
+    "name": "@creamie/core",
+    "version": "0.0.0",
+    "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Routing and Events etc...",
     "main": "creamie.js",
     "scripts": {
         "test": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
@@ -29,5 +29,8 @@
         "creamie-watcher": "0.0.5",
         "http-server": "^0.12.1",
         "testcafe": "^1.8.1"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }
