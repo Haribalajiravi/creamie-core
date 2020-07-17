@@ -1,8 +1,16 @@
 import TextField from './plugins/textfield.js';
 import Select from './plugins/select.js';
+import If from './plugins/if.js';
 
 class PluginConnector {
 
+    /**
+     * Constructor to initialize all required members
+     * @param {object} param0
+     * scopes, [refferenced object to map with DOM]
+     * dataCache, [extra data source to maintain operations and destroy in future]
+     * excludePlugins, [Default plugin classes to neglect while binding]
+     */
     constructor({
         scopes,
         dataCache,
@@ -12,6 +20,7 @@ class PluginConnector {
         this.dataCache = dataCache;
         this.excludePlugins = (Array.isArray(excludePlugins) && excludePlugins.length) ? excludePlugins : [];
         this.plugins = [
+            new If(),
             new TextField(),
             new Select()
         ];
@@ -21,6 +30,15 @@ class PluginConnector {
         };
     }
 
+    /**
+     * It will return a boolean if element match with plugin conditions
+     * @param {object} param0 
+     * element, [current DOM element]
+     * property, [binded object's key]
+     * type, [string have getter, setter action]
+     * currentValue [assigned value with respect to the object's property],
+     * oldValue [value before currentValue]
+     */
     isMatched({
         element,
         property,
@@ -35,6 +53,7 @@ class PluginConnector {
             currentValue: currentValue,
             oldValue: oldValue
         };
+        // Exclude all given default plugins if anything have 
         let intersectedPlugins = this.pluginIntersector();
         for (let i = 0; i < intersectedPlugins.length; i++) {
             let plugin = intersectedPlugins[i];
@@ -48,6 +67,9 @@ class PluginConnector {
         return false;
     }
 
+    /**
+     * It will execute the matched plugin's getter method
+     */
     getter() {
         let elementGetter = this.matchedCache.getter;
         elementGetter.plugin.get({
@@ -58,6 +80,9 @@ class PluginConnector {
         });
     }
 
+    /**
+     * It will execute the matched plugin's setter method
+     */
     setter() {
         let elementSetter = this.matchedCache.setter;
         elementSetter.plugin.set({
@@ -71,6 +96,9 @@ class PluginConnector {
         });
     }
 
+    /**
+     * It will exclude the given default plugin from conditional ladder
+     */
     pluginIntersector() {
         let weakMap = new WeakMap();
         let intersectedPlugins = [];
@@ -90,6 +118,9 @@ class PluginConnector {
         return intersectedPlugins;
     }
 
+    /**
+     * It will collect the methods to perform it at component's disconnected callback
+     */
     destroyer() {
         let elementDestroyer = this.matchedCache.getter;
         elementDestroyer.plugin.destroy({

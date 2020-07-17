@@ -11,7 +11,7 @@ export default class Binder {
         excludePlugins
     }) {
         this.scopes = {};
-        this.domCache = null;
+        this.domCache = [];
         this.dataCache = {};
         this.getterMethods = (Array.isArray(getterMethods) && getterMethods.length) ? getterMethods : [];
         this.setterMethods = (Array.isArray(setterMethods) && setterMethods.length) ? setterMethods : [];
@@ -21,17 +21,26 @@ export default class Binder {
             dataCache: this.dataCache,
             excludePlugins: excludePlugins
         });
-        this.weakmap = new WeakMap();
+        this.propertyMap = {};
         if (bindAttribute && bindAttribute.length > 2) {
             this.bindAttribute = bindAttribute;
             this.dom = customElement;
             let _this = this;
-            _this.domCache = _this.dom.querySelectorAll(`[${_this.bindAttribute}]`);
-            _this.domCache.forEach((element) => {
-                let property = element.getAttribute(_this.bindAttribute);
-                _this.weakmap.set(element, property);
-                _this.addScopes(property);
-
+            let attributeMap = {};
+            let counter = 0;
+            ['if', 'for', _this.bindAttribute].forEach((attribute) => {
+                _this.dom.querySelectorAll(`[${attribute}]`).forEach((element) => {
+                    attributeMap[counter++] = element.getAttribute(attribute);
+                })
+            });
+            _this.domCache = [
+                ..._this.dom.querySelectorAll(`[if]`),
+                ..._this.dom.querySelectorAll(`[for]`),
+                ..._this.dom.querySelectorAll(`[${_this.bindAttribute}]`)
+            ];
+            _this.domCache.forEach((element, index) => {
+                let property = attributeMap[index];
+                _this.propertyMap[index] = property;
                 if (_this.pluginConnector.isMatched({
                     element: element,
                     property: property,
@@ -58,6 +67,7 @@ export default class Binder {
                         }
                     }
                 }
+                _this.addScopes(property);
                 element.removeAttribute(_this.bindAttribute);
             })
         } else if (bindAttribute) {
@@ -72,8 +82,8 @@ export default class Binder {
             Object.defineProperty(_this.scopes, property, {
                 set: function (newValue) {
                     currentValue = newValue;
-                    _this.domCache.forEach((element) => {
-                        if (_this.weakmap.get(element) == property) {
+                    _this.domCache.forEach((element, index) => {
+                        if (_this.propertyMap[index] == property) {
                             if (_this.pluginConnector.isMatched({
                                 element: element,
                                 property: property,
@@ -91,7 +101,7 @@ export default class Binder {
                                     cache: _this.dataCache[property],
                                     allCache: _this.dataCache
                                 }, 'setterMethods');
-                                if (!passed) {
+                                if (!passed && typeof newValue == 'string') {
                                     element.innerText = newValue;
                                 }
                             }
@@ -135,7 +145,7 @@ export default class Binder {
     free() {
         let _this = this;
         this.domCache.forEach((element, index) => {
-            let property = _this.weakmap.get(element);
+            let property = _this.propertyMap[index];
             if (_this.pluginConnector.isMatched({
                 element: element,
                 scopes: _this.scopes,
