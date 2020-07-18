@@ -26,7 +26,7 @@
     "author": "Haribalaji R (haribalajiravi@gmail.com)",
     "license": "MIT",
     "devDependencies": {
-        "creamie-watcher": "0.0.5",
+        "@creamie/watcher": "latest",
         "http-server": "^0.12.1",
         "testcafe": "^1.8.1"
     },

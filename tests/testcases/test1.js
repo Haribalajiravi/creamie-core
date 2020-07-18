@@ -24,6 +24,24 @@ test('Events: click event', async t => {
 });
 
 /**
+ * If directive - hide
+ */
+test('If: hide', async t => {
+    await t
+        .click('#hide')
+        .expect(Selector('#if-directive').exists).notOk();
+});
+
+/**
+ * If directive - show
+ */
+test('If: show', async t => {
+    await t
+        .click('#show')
+        .expect(Selector('#if-directive').exists).ok();
+});
+
+/**
  * Plugins
  */
 test('Plugin Exclude: Checking textfield', async t => {

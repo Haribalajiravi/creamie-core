@@ -15,6 +15,12 @@ export default class App extends Creamie {
             setRouterParam: function() {
                 console.log(_this.router);
                 _this.data.routerId = _this.router.params.routerId;
+            },
+            hide: function() {
+                _this.data.canHave = false;
+            },
+            show: function() {
+                _this.data.canHave = true;
             }
         });
         this.router = new Router('route-app', {

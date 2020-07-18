@@ -2,11 +2,14 @@
     <div>
         <img src="assets/cream.png" width="200" height="200" />
     </div>
+    <!-- Basic binder case -->
     <div class="creamieFont lobster dark-brown" data="name" id="binder-reflecter">No text typed!</div>
     <input type="text" data="name" id="binder-textbox" placeholder="type anything here">
+    <!-- Basic event case -->
     <div>
         <button id="event-click" e="click:changeData">Click me!</button>
     </div>
+    <!-- Router -->
     <div>
         <a route-to="/tester" id="router-test">test</a>
         <a route-to="/test/creamie" id="router-test-creamie">test/creamie</a>
@@ -14,10 +17,13 @@
         <div data="routerId" id="router-param-reflector"></div>
         <route-app></route-app>
     </div>
+    <!-- If directive -->
+    <div>
+        <div if="canHave" id="if-directive">Check the content</div>
+        <button id="hide" e="click:hide">hide</button> <button id="show" e="click:show">show</button>
+    </div>
 </div>
-<div class="sample">
-    <plugins-component></plugins-component>
-</div>
+<!-- Binder plugins test -->
 <div class="sample">
     <exclude-component></exclude-component>
 </div>
