@@ -21,6 +21,17 @@ export default class App extends Creamie {
             },
             show: function() {
                 _this.data.canHave = true;
+            },
+            hide2: function() {
+                _this.data.showReflector = false;
+            },
+            show2: function() {
+                _this.data.showReflector = true;
+            },
+            addData: function() {
+                _this.binder.push('items', {
+                    itemName: 'creamie'
+                });
             }
         });
         this.router = new Router('route-app', {

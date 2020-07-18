@@ -22,30 +22,34 @@ export default class Binder {
             excludePlugins: excludePlugins
         });
         this.propertyMap = {};
+        this.attributeMap = {};
+        this.elementMap = {};
         if (bindAttribute && bindAttribute.length > 2) {
             this.bindAttribute = bindAttribute;
             this.dom = customElement;
             let _this = this;
-            let attributeMap = {};
             let counter = 0;
-            ['if', 'for', _this.bindAttribute].forEach((attribute) => {
+            ['if', 'loop', _this.bindAttribute].forEach((attribute) => {
                 _this.dom.querySelectorAll(`[${attribute}]`).forEach((element) => {
-                    attributeMap[counter++] = element.getAttribute(attribute);
+                    _this.attributeMap[counter++] = attribute;
                 })
             });
             _this.domCache = [
                 ..._this.dom.querySelectorAll(`[if]`),
-                ..._this.dom.querySelectorAll(`[for]`),
+                ..._this.dom.querySelectorAll(`[loop]`),
                 ..._this.dom.querySelectorAll(`[${_this.bindAttribute}]`)
             ];
             _this.domCache.forEach((element, index) => {
-                let property = attributeMap[index];
+                let attribute = _this.attributeMap[index];
+                let property = element.getAttribute(attribute);
+                _this.elementMap[property] = element;
                 _this.propertyMap[index] = property;
                 if (_this.pluginConnector.isMatched({
-                    element: element,
-                    property: property,
-                    type: 'getter',
-                })) {
+                        element: element,
+                        property: property,
+                        type: 'getter',
+                        attribute: attribute
+                    })) {
                     _this.pluginConnector.getter();
                 } else {
                     for (let i = 0; i < _this.getterMethods.length; i++) {
@@ -68,8 +72,10 @@ export default class Binder {
                     }
                 }
                 _this.addScopes(property);
-                element.removeAttribute(_this.bindAttribute);
-            })
+                if (attribute != 'if' && attribute != 'loop') {
+                    element.removeAttribute(_this.bindAttribute);
+                }
+            });
         } else if (bindAttribute) {
             throw this.getError('BINDER_ATTRIBUTE_LENGTH', bindAttribute);
         }
@@ -83,14 +89,16 @@ export default class Binder {
                 set: function (newValue) {
                     currentValue = newValue;
                     _this.domCache.forEach((element, index) => {
+                        let attribute = _this.attributeMap[index];
                         if (_this.propertyMap[index] == property) {
                             if (_this.pluginConnector.isMatched({
-                                element: element,
-                                property: property,
-                                type: 'setter',
-                                currentValue: currentValue,
-                                oldValue: _this.scopes[property],
-                            })) {
+                                    element: element,
+                                    property: property,
+                                    type: 'setter',
+                                    currentValue: currentValue,
+                                    oldValue: _this.scopes[property],
+                                    attribute: attribute
+                                })) {
                                 _this.pluginConnector.setter();
                             } else {
                                 let passed = _this.ladderExecutor({
@@ -101,7 +109,7 @@ export default class Binder {
                                     cache: _this.dataCache[property],
                                     allCache: _this.dataCache
                                 }, 'setterMethods');
-                                if (!passed && typeof newValue == 'string') {
+                                if (!passed && attribute != 'if' && attribute != 'loop') {
                                     element.innerText = newValue;
                                 }
                             }
@@ -125,6 +133,23 @@ export default class Binder {
         });
     }
 
+    push(property, newScope) {
+        let newScopes = [];
+        newScopes.push(newScope);
+        this.extend(property, newScopes);
+    }
+
+    extend(property, newScopes) {
+        let scopes = this.scopes[property];
+        if (scopes && Array.isArray(scopes)) {
+            newScopes.forEach((scope) => scopes.push(scope));
+            let element = this.elementMap[property];
+            // index '1' denotes Loop() class
+            let loop = this.pluginConnector.plugins[1];
+            loop.extend(property, element, newScopes);
+        }
+    }
+
     ladderExecutor(dataObject, methodProperty) {
         let passed = false;
         for (let i = 0; i < this[methodProperty].length; i++) {
@@ -142,17 +167,21 @@ export default class Binder {
         return passed;
     }
 
+    canSetInnerText() {
+
+    }
+
     free() {
         let _this = this;
         this.domCache.forEach((element, index) => {
             let property = _this.propertyMap[index];
             if (_this.pluginConnector.isMatched({
-                element: element,
-                scopes: _this.scopes,
-                property: property,
-                dataCache: _this.dataCache,
-                type: 'getter'
-            })) {
+                    element: element,
+                    scopes: _this.scopes,
+                    property: property,
+                    dataCache: _this.dataCache,
+                    type: 'getter'
+                })) {
                 _this.pluginConnector.destroyer();
             } else if (Array.isArray(_this.destroyMethods) && _this.destroyMethods.length) {
                 _this.ladderExecutor({

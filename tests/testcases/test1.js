@@ -42,6 +42,30 @@ test('If: show', async t => {
 });
 
 /**
+ * If directive mixed with DOM refelctor
+ */
+test('If: mixed with DOM refelctor', async t => {
+    await t
+        .typeText('#if-reflector', 'creamie')
+        .expect(Selector('#if-reflector-dom').innerText).eql('creamie');
+});
+
+test('If: mixed with DOM refelctor - hide', async t => {
+    await t
+        .click('#hide2')
+        .expect(Selector('#if-reflector-dom').exists).notOk();
+});
+
+/**
+ * Loop directive 
+ */
+test('Loop: directive one push test', async t => {
+    await t
+        .click('#add-data')
+        .expect(Selector('#item-name').innerText).eql('creamie');
+});
+
+/**
  * Plugins
  */
 test('Plugin Exclude: Checking textfield', async t => {

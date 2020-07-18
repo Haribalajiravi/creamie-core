@@ -1,6 +1,7 @@
+import If from './plugins/if.js';
+import Loop from './plugins/loop.js';
 import TextField from './plugins/textfield.js';
 import Select from './plugins/select.js';
-import If from './plugins/if.js';
 
 class PluginConnector {
 
@@ -21,6 +22,7 @@ class PluginConnector {
         this.excludePlugins = (Array.isArray(excludePlugins) && excludePlugins.length) ? excludePlugins : [];
         this.plugins = [
             new If(),
+            new Loop(),
             new TextField(),
             new Select()
         ];
@@ -44,6 +46,7 @@ class PluginConnector {
         property,
         type,
         currentValue,
+        attribute,
         oldValue }) {
         let matchUpObj = {
             element: element,
@@ -51,7 +54,8 @@ class PluginConnector {
             property: property,
             dataCache: this.dataCache,
             currentValue: currentValue,
-            oldValue: oldValue
+            oldValue: oldValue,
+            attribute: attribute
         };
         // Exclude all given default plugins if anything have 
         let intersectedPlugins = this.pluginIntersector();

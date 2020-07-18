@@ -3,19 +3,19 @@ import DOMRememberer from './../domrememberer.js';
 export default class If {
 
     constructor() {
-        this.domCache = {};
-        this.remember = undefined;
+        this.ifAttribute = 'if';
     }
 
     get({
         element,
         scopes,
-        property
+        property,
+        dataCache
     }) {
         /**
          * Register element to DOMRememberer to insert and remove
          */
-        this.remember = new DOMRememberer(element);
+        dataCache[property] = new DOMRememberer(element);
     }
 
     /**
@@ -28,13 +28,14 @@ export default class If {
     set({
         element,
         currentValue,
-        property
+        property,
+        dataCache
     }) {
-        if(typeof currentValue == 'boolean') {
-            if(currentValue) {
-                this.remember.insert();
+        if (typeof currentValue == 'boolean') {
+            if (currentValue) {
+                dataCache[property].insert();
             } else {
-                this.remember.remove();
+                dataCache[property].remove();
             }
         } else {
             throw `${property} should be boolean type.`
@@ -48,11 +49,12 @@ export default class If {
      */
     isMatched({
         element,
-        currentValue
+        currentValue,
+        attribute
     }) {
         return {
-            getter: (element.hasAttribute('if')) ? true : false,
-            setter: (element.hasAttribute('if') && typeof currentValue == 'boolean') ? true : false
+            getter: (element.hasAttribute(this.ifAttribute) && attribute == this.ifAttribute) ? true : false,
+            setter: (element.hasAttribute(this.ifAttribute) && attribute == this.ifAttribute && typeof currentValue == 'boolean') ? true : false
         }
     }
 

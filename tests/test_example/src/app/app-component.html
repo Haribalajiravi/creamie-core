@@ -22,6 +22,19 @@
         <div if="canHave" id="if-directive">Check the content</div>
         <button id="hide" e="click:hide">hide</button> <button id="show" e="click:show">show</button>
     </div>
+    <!-- If directive along with binder reflector -->
+    <div>
+        <input type="text" id="if-reflector" data="ifReflector" />
+        <div if="showReflector" data="ifReflector" id="if-reflector-dom">This could be a IF directive</div>
+        <button id="hide2" e="click:hide2">hide</button> <button id="show2" e="click:show2">show</button>
+    </div>
+    <!-- Loop directive -->
+    <div>
+        <div loop="items">
+            <div el="itemName" id="item-name"></div>
+        </div>
+        <button e="click:addData" id="add-data">Add Data</button>
+    </div>
 </div>
 <!-- Binder plugins test -->
 <div class="sample">
