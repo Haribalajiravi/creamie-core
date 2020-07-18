@@ -1,8 +1,8 @@
 ![Creamie javascript framework which is purely based on web components lifecycle](https://raw.githubusercontent.com/Haribalajiravi/creamie/master/creamie.png)
 
-[![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie) [![CodeFactor](https://www.codefactor.io/repository/github/haribalajiravi/creamie/badge/master)](https://www.codefactor.io/repository/github/haribalajiravi/creamie/overview/master) [![Gitter](https://badges.gitter.im/creamie-cli/community.svg)](https://gitter.im/creamie-cli/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie) [![Download](https://img.shields.io/npm/dt/@creamie/core.svg)](https://npmcharts.com/compare/@creamie/core?minimal=true) [![GitHub issues](https://img.shields.io/github/issues/Haribalajiravi/creamie)](https://github.com/Haribalajiravi/creamie/issues) [![CodeFactor](https://www.codefactor.io/repository/github/haribalajiravi/creamie/badge/master)](https://www.codefactor.io/repository/github/haribalajiravi/creamie/overview/master) [![Gitter](https://badges.gitter.im/creamie-cli/community.svg)](https://gitter.im/creamie-cli/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) 
 
-[![version](https://img.shields.io/npm/v/creamie.svg?style=for-the-badge)](https://www.npmjs.com/package/creamie) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT) [![Become a patreon](https://img.shields.io/badge/%20-Become%20a%20patreon%3F-%23555555?logo=patreon&style=for-the-badge)](https://www.patreon.com/haribalajiravi) [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Haribalajiravi/creamie)
+[![version](https://img.shields.io/npm/v/@creamie/core.svg?style=for-the-badge)](https://www.npmjs.com/package/@creamie/core) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT) [![Become a patreon](https://img.shields.io/badge/%20-Become%20a%20patreon%3F-%23555555?logo=patreon&style=for-the-badge)](https://www.patreon.com/haribalajiravi) [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Haribalajiravi/creamie)
 
 If you find this framework more useful
 
@@ -14,7 +14,7 @@ To use this as library try below command:
 
 ```npm install @creamie/core```
 
- If you don't want to create project manually, we'll recommend you to install [creamie-cli](https://www.npmjs.com/package/creamie-cli) globally. 
+ If you don't want to create project manually, we'll recommend you to install [creamie-cli](https://www.npmjs.com/package/@creamie/cli) globally. 
  [Read more](https://github.com/Haribalajiravi/creamie-cli/blob/master/README.md) to access auto-project generation CLI tool.
 
 ## Check out official framework docs below
