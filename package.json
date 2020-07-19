@@ -1,42 +1,48 @@
 {
-    "name": "@creamie/core",
-    "version": "0.1.0",
-    "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Directives, Routing and Events etc...",
-    "main": "creamie.js",
-    "scripts": {
-        "test": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
-        "test-headed": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
-        "test-server": "node tests/boot-runner.js && http-server",
-        "test-standalone": "testcafe chrome,firefox tests/testcases/"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "npm test"
-        }
-    },
-    "keywords": [
-        "creamie",
-        "creamie js",
-        "js-framework",
-        "framework",
-        "javascript",
-        "frontend",
-        "routing",
-        "components",
-        "binding"
-    ],
-    "bin": {
-        "creamie": "index.js"
-    },
-    "author": "Haribalaji R (haribalajiravi@gmail.com)",
-    "license": "MIT",
-    "devDependencies": {
-        "@creamie/watcher": "latest",
-        "http-server": "^0.12.1",
-        "husky": "^4.2.5",
-        "testcafe": "^1.8.1"
-    },
-    "publishConfig": {
-        "access": "public"
+  "name": "@creamie/core",
+  "version": "0.1.0",
+  "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Directives, Routing and Events etc...",
+  "main": "creamie.js",
+  "scripts": {
+    "test": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+    "test:headed": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+    "test:server": "node tests/boot-runner.js && http-server",
+    "test:standalone": "testcafe chrome,firefox tests/testcases/",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
     }
+  },
+  "keywords": [
+    "creamie",
+    "creamie js",
+    "js-framework",
+    "framework",
+    "javascript",
+    "frontend",
+    "routing",
+    "components",
+    "binding"
+  ],
+  "bin": {
+    "creamie": "index.js"
+  },
+  "author": "Haribalaji R (haribalajiravi@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@creamie/watcher": "latest",
+    "eslint": "^7.5.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "http-server": "^0.12.1",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "testcafe": "^1.8.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
