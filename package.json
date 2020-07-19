@@ -9,6 +9,11 @@
         "test-server": "node tests/boot-runner.js && http-server",
         "test-standalone": "testcafe chrome,firefox tests/testcases/"
     },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npm test"
+        }
+    },
     "keywords": [
         "creamie",
         "creamie js",
@@ -28,6 +33,7 @@
     "devDependencies": {
         "@creamie/watcher": "latest",
         "http-server": "^0.12.1",
+        "husky": "^4.2.5",
         "testcafe": "^1.8.1"
     },
     "publishConfig": {
