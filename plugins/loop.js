@@ -1,14 +1,22 @@
+import { ArrayObserver } from './../arrayobserver.js';
+
 export default class Loop {
   constructor() {
     this.loopAttribute = 'loop';
     this.loopItemAttribute = 'el';
     this.cloneCopy = {};
+    this.observeArray = {};
+    this.array = {};
+    this.elementList = {};
   }
 
-  get({ element, scopes, property }) {
+  get({ element, property }) {
     this.cloneCopy[property] = element.cloneNode(true);
-    scopes[property] = [];
-    element.innerHTML = '';
+    this.observeArray[property] = [];
+    this.elementList[property] = [];
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
   }
 
   /**
@@ -18,8 +26,26 @@ export default class Loop {
    * currentValue, [assigned value with respect to the object's property]
    * property, [Attribute value of if]
    */
-  set({ element, currentValue }) {
-    this.extend(element, currentValue);
+  set({ element, currentValue, scopes, property }) {
+    while (element.firstChild) {
+      element.removeChild(element.firstChild);
+    }
+    this.observeArray[property] = currentValue;
+    let arrayObserver = new ArrayObserver(
+      this.observeArray[property],
+      ({ type, index, value }) => {
+        this.observerCallback({
+          property: property,
+          element: element,
+          type: type,
+          index: index,
+          value: value,
+        });
+      }
+    );
+    scopes[property] = arrayObserver.getArray();
+    this.array[property] = arrayObserver.getActualArray();
+    this.extend(property, element, currentValue);
   }
 
   /**
@@ -29,15 +55,20 @@ export default class Loop {
    * @param {Function} callback
    * Below method will append additional items
    */
-  extend(property, element, items) {
+  extend(property, element, items, indices) {
     let rootFragment = document.createDocumentFragment();
     for (let index = 0; index < items.length; index++) {
       let item = items[index];
-      let newFragment = this.createNodeListFragment(
+      let newElement = this.createNodeListFragment(
         this.cloneCopy[property]
       );
-      this.insertData(newFragment, item);
-      rootFragment.append(newFragment);
+      if (indices) {
+        this.elementList[property][indices[index]] = newElement;
+      } else {
+        this.elementList[property][index] = newElement;
+      }
+      this.insertData(newElement, item);
+      rootFragment.append(newElement);
     }
     element.appendChild(rootFragment);
   }
@@ -54,7 +85,9 @@ export default class Loop {
       let cloneNode = nodeList[index].cloneNode(true);
       fragment.appendChild(cloneNode);
     }
-    return fragment;
+    let newElement = document.createElement('element');
+    newElement.appendChild(fragment);
+    return newElement;
   }
 
   /**
@@ -75,6 +108,21 @@ export default class Loop {
         el.innerText = data;
       }
     });
+  }
+
+  observerCallback({ property, element, type, index, value }) {
+    switch (type) {
+      case 'added':
+        this.extend(property, element, [value], [index]);
+        break;
+      case 'removed':
+        this.elementList[property][index].remove();
+        this.elementList[property].splice(index, 1);
+        break;
+      case 'modified':
+        this.insertData(this.elementList[property][index], value);
+        break;
+    }
   }
 
   /**

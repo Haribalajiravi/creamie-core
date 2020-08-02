@@ -29,7 +29,8 @@ export default class App extends Creamie {
         _this.data.showReflector = true;
       },
       addData: function () {
-        _this.binder.push('items', {
+        _this.data.items = [];
+        _this.data.items.push({
           itemName: 'creamie',
         });
       },

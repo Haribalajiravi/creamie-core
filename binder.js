@@ -1,3 +1,4 @@
+import { ArrayObserverType } from './arrayobserver.js';
 import PluginConnector from './pluginConnector.js';
 
 export default class Binder {
@@ -103,42 +104,44 @@ export default class Binder {
       Object.defineProperty(_this.scopes, property, {
         set: function (newValue) {
           currentValue = newValue;
-          _this.domCache.forEach((element, index) => {
-            let attribute = _this.attributeMap[index];
-            if (_this.propertyMap[index] == property) {
-              if (
-                _this.pluginConnector.isMatched({
-                  element: element,
-                  property: property,
-                  type: 'setter',
-                  currentValue: currentValue,
-                  oldValue: _this.scopes[property],
-                  attribute: attribute,
-                })
-              ) {
-                _this.pluginConnector.setter();
-              } else {
-                let passed = _this.ladderExecutor(
-                  {
-                    currentValue: currentValue,
-                    element: element,
-                    data: _this.scopes,
-                    property: property,
-                    cache: _this.dataCache[property],
-                    allCache: _this.dataCache,
-                  },
-                  'setterMethods'
-                );
+          if (!(currentValue instanceof ArrayObserverType)) {
+            _this.domCache.forEach((element, index) => {
+              let attribute = _this.attributeMap[index];
+              if (_this.propertyMap[index] == property) {
                 if (
-                  !passed &&
-                  attribute != 'if' &&
-                  attribute != 'loop'
+                  _this.pluginConnector.isMatched({
+                    element: element,
+                    property: property,
+                    type: 'setter',
+                    currentValue: currentValue,
+                    oldValue: _this.scopes[property],
+                    attribute: attribute,
+                  })
                 ) {
-                  element.innerText = newValue;
+                  _this.pluginConnector.setter();
+                } else {
+                  let passed = _this.ladderExecutor(
+                    {
+                      currentValue: currentValue,
+                      element: element,
+                      data: _this.scopes,
+                      property: property,
+                      cache: _this.dataCache[property],
+                      allCache: _this.dataCache,
+                    },
+                    'setterMethods'
+                  );
+                  if (
+                    !passed &&
+                    attribute != 'if' &&
+                    attribute != 'loop'
+                  ) {
+                    element.innerText = newValue;
+                  }
                 }
               }
-            }
-          });
+            });
+          }
         },
         get: function () {
           return currentValue;
@@ -157,23 +160,6 @@ export default class Binder {
         _this.scopes[property] = newScopes[property];
       }
     });
-  }
-
-  push(property, newScope) {
-    let newScopes = [];
-    newScopes.push(newScope);
-    this.extend(property, newScopes);
-  }
-
-  extend(property, newScopes) {
-    let scopes = this.scopes[property];
-    if (scopes && Array.isArray(scopes)) {
-      newScopes.forEach((scope) => scopes.push(scope));
-      let element = this.elementMap[property];
-      // index '1' denotes Loop() class
-      let loop = this.pluginConnector.plugins[1];
-      loop.extend(property, element, newScopes);
-    }
   }
 
   ladderExecutor(dataObject, methodProperty) {
