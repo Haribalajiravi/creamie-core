@@ -24,9 +24,10 @@ To use this as library try below command:
 ## Feature currently available
 
 1. [Web components & Custom elements](#web-components)
-2. [Two Binder (Binding between DOM & Object)](#binder)
-3. [Router](#router)
-4. [Events](#events)
+2. [Directives (if & loop)](#directives)
+3. [Binder (Binding between DOM & Object)](#binder)
+4. [Router](#router)
+5. [Events](#events)
 
 ### Web components
 
@@ -89,10 +90,21 @@ index.html:
 </body>
 </html>
 ```
+## Directives
+
+Display data to DOM with ease.
+
+### if
+
+`if` directive, remove/display DOM via binder scope. [know more](https://creamie.io/docs/directives#how-removeadd-dom-through-binder-scope)
+
+### loop
+
+`loop` directive, display array of object in DOM via binder scope wih array property. [know more](http://localhost:3000/docs/directives#how-to-display-list-of-data-to-dom)
 
 ## Binder
 
-Binder will make the data sync between a HTMLElement and Object.
+Binder will make the data sync between a HTMLElement and Object. [know more](https://creamie.io/docs/binder)
 
 Example:
 
@@ -130,7 +142,7 @@ window.customElements.define(AppConfig.tag, App);
 
 ## Router
 
-Router will replace the particular component on a route placeholder without refreshing the page.
+Router will replace the particular component on a route placeholder without refreshing the page. [know more](https://creamie.io/docs/router)
 
 Example:
 
@@ -139,7 +151,7 @@ App.js:
 ```javascript
 import Creamie from '@creamie/core';
 import  AppConfig  from  './appConfig.js';
-import Router from 'creamie/router.js';
+import Router from '@creamie/core/router.js';
 import Home from './home.js';
 import Tab from './tab.js';
 
@@ -187,6 +199,8 @@ index.html:
 ```
 
 ## Events
+
+Event listeners based on [event delegation](https://javascript.info/event-delegation) methodology. [know more](https://creamie.io/docs/events)
 
 Example:
 

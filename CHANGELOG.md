@@ -1,9 +1,9 @@
-## 0.1.0 (July 18, 2020)
+## 0.1.0 (August 02, 2020)
 
-### New Features - ( If and Loop Directives)
+### New Features - (If and Loop Directives)
 
 * 'If' directive, which is combined with binder and easy to remove/add DOMs
-* 'Loop' directive, which is also combined with binder with couple of methods. We can push/extend new data towards DOM.
+* 'Loop' directive, which is also combined with binder scope as array property
 
 ## 0.0.0 (June 14, 2020)
 
