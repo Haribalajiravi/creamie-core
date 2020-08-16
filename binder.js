@@ -182,8 +182,6 @@ export default class Binder {
     return passed;
   }
 
-  canSetInnerText() {}
-
   free() {
     let _this = this;
     this.domCache.forEach((element, index) => {

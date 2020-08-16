@@ -1,4 +1,4 @@
-![Creamie javascript framework which is purely based on web components lifecycle](https://raw.githubusercontent.com/Haribalajiravi/creamie/master/creamie.png)
+![Creamie javascript framework which is purely based on web components lifecycle](https://raw.githubusercontent.com/Haribalajiravi/creamie/master/creamie-title-desc.png)
 
 [![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie) [![Download](https://img.shields.io/npm/dt/@creamie/core.svg)](https://npmcharts.com/compare/@creamie/core?minimal=true) [![GitHub issues](https://img.shields.io/github/issues/Haribalajiravi/creamie)](https://github.com/Haribalajiravi/creamie/issues) [![CodeFactor](https://www.codefactor.io/repository/github/haribalajiravi/creamie/badge/master)](https://www.codefactor.io/repository/github/haribalajiravi/creamie/overview/master) [![Gitter](https://badges.gitter.im/creamie-cli/community.svg)](https://gitter.im/creamie-cli/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) 
 

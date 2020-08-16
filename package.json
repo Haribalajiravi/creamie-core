@@ -1,6 +1,6 @@
 {
   "name": "@creamie/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Directives, Routing and Events etc...",
   "main": "creamie.js",
   "scripts": {
@@ -34,13 +34,13 @@
   "license": "MIT",
   "devDependencies": {
     "@creamie/watcher": "latest",
-    "eslint": "^7.5.0",
+    "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "http-server": "^0.12.3",
     "husky": "^4.2.5",
     "prettier": "^2.0.5",
-    "testcafe": "^1.8.1"
+    "testcafe": "^1.9.1"
   },
   "publishConfig": {
     "access": "public"
