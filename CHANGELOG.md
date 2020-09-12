@@ -1,3 +1,12 @@
+# CHANGELOG
+
+## 0.1.2 (September 12, 2020)
+
+### Performance fix - (Loop Directive)
+
+* Remembering loop element DOMs in cache to use it on insert
+* Element listing on its parent loop reference instead of creating new element tag
+  
 ## 0.1.0 (August 02, 2020)
 
 ### New Features - (If and Loop Directives)
