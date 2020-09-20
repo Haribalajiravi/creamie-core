@@ -10,9 +10,18 @@ export default class Binder {
     destroyMethods,
     excludePlugins,
   }) {
-    this.scopes = {};
-    this.domCache = [];
-    this.dataCache = {};
+    (this.scopes = {}),
+      (this.domCache = []),
+      (this.dataCache = {}),
+      (this.propertyMap = {}),
+      (this.attributeMap = {}),
+      (this.elementMap = {}),
+      (this.getterMethods = []),
+      (this.setterMethods = []),
+      (this.destroyMethods = []),
+      (this.bindAttribute = 'data'),
+      (this.dom = undefined),
+      (this.pluginConnector = undefined);
     this.getterMethods =
       Array.isArray(getterMethods) && getterMethods.length
         ? getterMethods
@@ -30,69 +39,70 @@ export default class Binder {
       dataCache: this.dataCache,
       excludePlugins: excludePlugins,
     });
-    this.propertyMap = {};
-    this.attributeMap = {};
-    this.elementMap = {};
     if (bindAttribute && bindAttribute.length > 2) {
       this.bindAttribute = bindAttribute;
-      this.dom = customElement;
-      const _this = this;
-      let counter = 0;
-      ['if', 'loop', _this.bindAttribute].forEach((attribute) => {
-        _this.dom.querySelectorAll(`[${attribute}]`).forEach(() => {
-          _this.attributeMap[counter++] = attribute;
-        });
-      });
-      _this.domCache = [
-        ..._this.dom.querySelectorAll('[if]'),
-        ..._this.dom.querySelectorAll('[loop]'),
-        ..._this.dom.querySelectorAll(`[${_this.bindAttribute}]`),
-      ];
-      _this.domCache.forEach((element, index) => {
-        let attribute = _this.attributeMap[index];
-        let property = element.getAttribute(attribute);
-        _this.elementMap[property] = element;
-        _this.propertyMap[index] = property;
-        if (
-          _this.pluginConnector.isMatched({
-            element: element,
-            property: property,
-            type: 'getter',
-            attribute: attribute,
-          })
-        ) {
-          _this.pluginConnector.getter();
-        } else {
-          for (let i = 0; i < _this.getterMethods.length; i++) {
-            _this.dataCache[property] = {};
-            try {
-              let getterObj = _this.getterMethods[i]({
-                element: element,
-                data: _this.scopes,
-                property: property,
-                cache: _this.dataCache[property],
-                allCache: _this.dataCache,
-              });
-              if (getterObj.condition === true) {
-                getterObj.method();
-                break;
-              }
-            } catch (error) {
-              throw (
-                `[${property}] <= respective getterMethods[${i}] ` +
-                error
-              );
-            }
-          }
-        }
-        _this.addScopes(property);
-        if (attribute != 'if' && attribute != 'loop') {
-          element.removeAttribute(_this.bindAttribute);
-        }
-      });
+      this.initListener(customElement);
     } else if (bindAttribute) {
       throw this.getError('BINDER_ATTRIBUTE_LENGTH', bindAttribute);
     }
+  }
+
+  initListener(customElement) {
+    this.dom = customElement;
+    const _this = this;
+    let counter = 0;
+    ['if', 'loop', _this.bindAttribute].forEach((attribute) => {
+      _this.dom.querySelectorAll(`[${attribute}]`).forEach(() => {
+        _this.attributeMap[counter++] = attribute;
+      });
+    });
+    _this.domCache = [
+      ..._this.dom.querySelectorAll('[if]'),
+      ..._this.dom.querySelectorAll('[loop]'),
+      ..._this.dom.querySelectorAll(`[${_this.bindAttribute}]`),
+    ];
+    _this.domCache.forEach((element, index) => {
+      let attribute = _this.attributeMap[index];
+      let property = element.getAttribute(attribute);
+      _this.elementMap[property] = element;
+      _this.propertyMap[index] = property;
+      if (
+        _this.pluginConnector.isMatched({
+          element: element,
+          property: property,
+          type: 'getter',
+          attribute: attribute,
+        })
+      ) {
+        _this.pluginConnector.getter();
+      } else {
+        for (let i = 0; i < _this.getterMethods.length; i++) {
+          _this.dataCache[property] = {};
+          try {
+            let getterObj = _this.getterMethods[i]({
+              element: element,
+              data: _this.scopes,
+              property: property,
+              cache: _this.dataCache[property],
+              allCache: _this.dataCache,
+            });
+            if (getterObj.condition === true) {
+              getterObj.method();
+              break;
+            }
+          } catch (error) {
+            throw (
+              `[${property}] <= respective getterMethods[${i}] ` +
+              error
+            );
+          }
+        }
+      }
+      _this.addScopes(property);
+      if (attribute != 'if' && attribute != 'loop') {
+        element.removeAttribute(_this.bindAttribute);
+      }
+    });
   }
 
   addScopes(property) {

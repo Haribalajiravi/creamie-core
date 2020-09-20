@@ -9,7 +9,11 @@ export default class If {
     /**
      * Register element to DOMRememberer to insert and remove
      */
-    dataCache[property] = new DOMRememberer(element);
+    if (dataCache[property] == undefined) {
+      dataCache[property] = new Map();
+    }
+    let domRememberer = new DOMRememberer(element);
+    dataCache[property].set(element, domRememberer);
   }
 
   /**
@@ -19,12 +23,13 @@ export default class If {
    * currentValue, [assigned value with respect to the object's property]
    * property, [Attribute value of if]
    */
-  set({ currentValue, property, dataCache }) {
+  set({ element, currentValue, property, dataCache }) {
     if (typeof currentValue == 'boolean') {
-      if (currentValue) {
-        dataCache[property].insert();
+      let domRemembererMap = dataCache[property];
+      if (currentValue && domRemembererMap) {
+        domRemembererMap.get(element).insert();
       } else {
-        dataCache[property].remove();
+        domRemembererMap.get(element).remove();
       }
     } else {
       throw `${property} should be boolean type.`;

@@ -12,14 +12,21 @@ export default class Loop {
   }
 
   get({ element, property, dataCache }) {
-    this.cloneCopy[property] = element.cloneNode(true);
-    dataCache[property] = {
+    if (dataCache[property] == undefined) {
+      dataCache[property] = new Map();
+    }
+    if (this.cloneCopy[property] == undefined) {
+      this.cloneCopy[property] = new Map();
+    }
+    this.cloneCopy[property].set(element, element.cloneNode(true));
+    dataCache[property].set(element, {
       next: element.nextSibling,
       parent: element.parentNode,
-    };
-    this.observeArray[property] = [];
-    this.elementList[property] = [];
-    this.elementItemList[property] = [];
+    });
+    this.observeArray[property] = new Map();
+    this.elementList[property] = new Map();
+    this.elementItemList[property] = new Map();
+    this.array[property] = new Map();
     element.remove();
   }
 
@@ -30,32 +37,53 @@ export default class Loop {
    * currentValue, [assigned value with respect to the object's property]
    * property, [Attribute value of if]
    */
-  set({ currentValue, scopes, property, dataCache }) {
-    this.observeArray[property] = currentValue;
+  set({ element, currentValue, scopes, property, dataCache }) {
+    this.observeArray[property].set(element, currentValue);
     let arrayObserver = new ArrayObserver(
-      this.observeArray[property],
+      this.observeArray[property].get(element),
       ({ type, index, value }) => {
-        this.observerCallback({
-          property: property,
-          type: type,
-          index: index,
-          value: value,
-          dataCache: dataCache,
-        });
+        // deleteProperty in Proxy is not widely call multiple instances.
+        // So we are manually iterating callbacks
+        if (type == 'removed') {
+          for (let keyElement of dataCache[property].keys()) {
+            this.observerCallback({
+              property: property,
+              type: type,
+              index: index,
+              value: value,
+              dataCache: dataCache,
+              element: keyElement,
+            });
+          }
+        } else {
+          this.observerCallback({
+            property: property,
+            type: type,
+            index: index,
+            value: value,
+            dataCache: dataCache,
+            element: element,
+          });
+        }
       }
     );
     scopes[property] = arrayObserver.getArray();
-    this.array[property] = arrayObserver.getActualArray();
+    this.array[property].set(element, arrayObserver.getActualArray());
+    let elementList = this.elementList[property].get(element);
     for (
       let index = 0;
-      index < this.elementList[property].length;
+      elementList && index < elementList.length;
       index++
     ) {
-      this.elementList[property][index].remove();
+      elementList[index].remove();
     }
-    this.elementList[property] = [];
-    this.elementItemList[property] = [];
-    this.extend(property, currentValue, undefined, dataCache);
+    this.extend(
+      property,
+      currentValue,
+      undefined,
+      dataCache,
+      element
+    );
   }
 
   /**
@@ -67,35 +95,45 @@ export default class Loop {
    * @param {object} dataCache
    * Below method will append additional items
    */
-  extend(property, items, indices, dataCache) {
+  extend(property, items, indices, dataCache, element) {
     /* Below block of code will refresh the items container if there is new set of data assigned */
     let rootFragment = document.createDocumentFragment();
+    let elementList = [];
+    let elementItemList = [];
     for (let index = 0; index < items.length; index++) {
-      let item = items[index];
-      let newElement = this.cloneCopy[property].cloneNode(true);
+      let newElement = this.cloneCopy[property]
+        .get(element)
+        .cloneNode(true);
       if (indices) {
-        this.elementList[property][indices[index]] = newElement;
-        this.elementItemList[property][
-          indices[index]
-        ] = this.getLoopElements(newElement);
-        this.insertData(item, property, indices[index]);
-      } else {
-        this.elementList[property][index] = newElement;
-        this.elementItemList[property][index] = this.getLoopElements(
+        elementList[indices[index]] = newElement;
+        elementItemList[indices[index]] = this.getLoopElements(
           newElement
         );
-        this.insertData(item, property, index);
+      } else {
+        elementList[index] = newElement;
+        elementItemList[index] = this.getLoopElements(newElement);
       }
       newElement.removeAttribute(this.loopAttribute);
       rootFragment.append(newElement);
     }
-    if (dataCache[property].next) {
-      dataCache[property].parent.insertBefore(
+    this.elementList[property].set(element, elementList);
+    this.elementItemList[property].set(element, elementItemList);
+    for (let index = 0; index < items.length; index++) {
+      let item = items[index];
+      if (indices) {
+        this.insertData(item, property, indices[index], element);
+      } else {
+        this.insertData(item, property, index, element);
+      }
+    }
+    let localDataCache = dataCache[property].get(element);
+    if (localDataCache.next) {
+      localDataCache.parent.insertBefore(
         rootFragment,
-        dataCache[property].next
+        localDataCache.next
       );
     } else {
-      dataCache[property].parent.appendChild(rootFragment);
+      localDataCache.parent.appendChild(rootFragment);
     }
   }
 
@@ -128,8 +166,9 @@ export default class Loop {
    * @param {string} property
    * @param {number} index
    */
-  insertData(obj, property, index) {
-    this.elementItemList[property][index].forEach((elData) => {
+  insertData(obj, property, index, element) {
+    let elementList = this.elementItemList[property].get(element);
+    elementList[index].forEach((elData) => {
       let data = obj[elData.property];
       if (data) {
         elData.element.innerText = data;
@@ -137,17 +176,25 @@ export default class Loop {
     });
   }
 
-  observerCallback({ property, type, index, value, dataCache }) {
+  observerCallback({
+    property,
+    type,
+    index,
+    value,
+    dataCache,
+    element,
+  }) {
+    let elementList = this.elementList[property].get(element);
     switch (type) {
       case 'added':
-        this.extend(property, [value], [index], dataCache);
+        this.extend(property, [value], [index], dataCache, element);
         break;
       case 'removed':
-        this.elementList[property][index].remove();
-        this.elementList[property].splice(index, 1);
+        elementList[index].remove();
+        elementList.splice(index, 1);
         break;
       case 'modified':
-        this.insertData(value, property, index);
+        this.insertData(value, property, index, element);
         break;
     }
   }
