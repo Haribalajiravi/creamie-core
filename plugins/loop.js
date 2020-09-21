@@ -1,7 +1,7 @@
 import { ArrayObserver } from './../arrayobserver.js';
 
 export default class Loop {
-  constructor() {
+  constructor(binder) {
     this.loopAttribute = 'loop';
     this.loopItemAttribute = 'el';
     this.cloneCopy = {};
@@ -9,6 +9,7 @@ export default class Loop {
     this.array = {};
     this.elementList = {};
     this.elementItemList = {};
+    this.binder = binder;
   }
 
   get({ element, property, dataCache }) {
@@ -98,8 +99,9 @@ export default class Loop {
   extend(property, items, indices, dataCache, element) {
     /* Below block of code will refresh the items container if there is new set of data assigned */
     let rootFragment = document.createDocumentFragment();
-    let elementList = [];
-    let elementItemList = [];
+    let elementList = this.elementList[property].get(element) || [];
+    let elementItemList =
+      this.elementItemList[property].get(element) || [];
     for (let index = 0; index < items.length; index++) {
       let newElement = this.cloneCopy[property]
         .get(element)
@@ -115,6 +117,7 @@ export default class Loop {
       }
       newElement.removeAttribute(this.loopAttribute);
       rootFragment.append(newElement);
+      this.binder.initListener(newElement, 'reinit');
     }
     this.elementList[property].set(element, elementList);
     this.elementItemList[property].set(element, elementItemList);

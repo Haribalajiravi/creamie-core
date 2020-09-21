@@ -13,9 +13,8 @@ export default class Binder {
     (this.scopes = {}),
       (this.domCache = []),
       (this.dataCache = {}),
-      (this.propertyMap = {}),
-      (this.attributeMap = {}),
-      (this.elementMap = {}),
+      (this.propertyMap = []),
+      (this.attributeMap = []),
       (this.getterMethods = []),
       (this.setterMethods = []),
       (this.destroyMethods = []),
@@ -38,6 +37,7 @@ export default class Binder {
       scopes: this.scopes,
       dataCache: this.dataCache,
       excludePlugins: excludePlugins,
+      binder: this,
     });
     if (bindAttribute && bindAttribute.length > 2) {
       this.bindAttribute = bindAttribute;
@@ -47,25 +47,39 @@ export default class Binder {
     }
   }
 
-  initListener(customElement) {
-    this.dom = customElement;
+  initListener(customElement, type) {
     const _this = this;
-    let counter = 0;
+    let binderDomMap = {
+      if: customElement.querySelectorAll('[if]'),
+      loop: customElement.querySelectorAll('[loop]'),
+    };
+    binderDomMap[
+      _this.bindAttribute
+    ] = customElement.querySelectorAll(`[${_this.bindAttribute}]`);
+    let binderDoms = [];
     ['if', 'loop', _this.bindAttribute].forEach((attribute) => {
-      _this.dom.querySelectorAll(`[${attribute}]`).forEach(() => {
-        _this.attributeMap[counter++] = attribute;
+      binderDoms = [...binderDoms, ...binderDomMap[attribute]];
+      binderDomMap[attribute].forEach(() => {
+        _this.attributeMap.push(attribute);
       });
     });
-    _this.domCache = [
-      ..._this.dom.querySelectorAll('[if]'),
-      ..._this.dom.querySelectorAll('[loop]'),
-      ..._this.dom.querySelectorAll(`[${_this.bindAttribute}]`),
-    ];
-    _this.domCache.forEach((element, index) => {
-      let attribute = _this.attributeMap[index];
+    _this.domCache = [..._this.domCache, ...binderDoms];
+    let tempData = {};
+    if (type == 'reinit') {
+      tempData = {
+        domCache: binderDoms,
+        attributeIndex: _this.attributeMap.length - 1,
+      };
+    } else {
+      tempData = {
+        domCache: _this.domCache,
+        attributeIndex: 0,
+      };
+    }
+    tempData.domCache.forEach((element) => {
+      let attribute = _this.attributeMap[tempData.attributeIndex++];
       let property = element.getAttribute(attribute);
-      _this.elementMap[property] = element;
-      _this.propertyMap[index] = property;
+      _this.propertyMap.push(property);
       if (
         _this.pluginConnector.isMatched({
           element: element,

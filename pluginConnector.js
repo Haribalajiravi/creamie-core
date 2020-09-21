@@ -11,7 +11,7 @@ class PluginConnector {
    * dataCache, [extra data source to maintain operations and destroy in future]
    * excludePlugins, [Default plugin classes to neglect while binding]
    */
-  constructor({ scopes, dataCache, excludePlugins }) {
+  constructor({ scopes, dataCache, excludePlugins, binder }) {
     this.scopes = scopes;
     this.dataCache = dataCache;
     this.excludePlugins =
@@ -20,7 +20,7 @@ class PluginConnector {
         : [];
     this.plugins = [
       new If(),
-      new Loop(),
+      new Loop(binder),
       new TextField(),
       new Select(),
     ];
