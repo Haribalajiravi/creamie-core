@@ -13,13 +13,12 @@ export default class Binder {
     (this.scopes = {}),
       (this.domCache = []),
       (this.dataCache = {}),
-      (this.propertyMap = []),
-      (this.attributeMap = []),
+      (this.uids = []),
       (this.getterMethods = []),
       (this.setterMethods = []),
       (this.destroyMethods = []),
       (this.bindAttribute = 'data'),
-      (this.dom = undefined),
+      (this.dom = customElement),
       (this.pluginConnector = undefined);
     this.getterMethods =
       Array.isArray(getterMethods) && getterMethods.length
@@ -37,7 +36,6 @@ export default class Binder {
       scopes: this.scopes,
       dataCache: this.dataCache,
       excludePlugins: excludePlugins,
-      binder: this,
     });
     if (bindAttribute && bindAttribute.length > 2) {
       this.bindAttribute = bindAttribute;
@@ -49,43 +47,66 @@ export default class Binder {
 
   initListener(customElement, type) {
     const _this = this;
-    let binderDomMap = {
-      if: customElement.querySelectorAll('[if]'),
-      loop: customElement.querySelectorAll('[loop]'),
-    };
-    binderDomMap[
-      _this.bindAttribute
-    ] = customElement.querySelectorAll(`[${_this.bindAttribute}]`);
     let binderDoms = [];
-    ['if', 'loop', _this.bindAttribute].forEach((attribute) => {
-      binderDoms = [...binderDoms, ...binderDomMap[attribute]];
-      binderDomMap[attribute].forEach(() => {
-        _this.attributeMap.push(attribute);
+    [
+      {
+        attribute: 'if',
+        elements: customElement.querySelectorAll('[if]'),
+      },
+      {
+        attribute: 'loop',
+        elements: customElement.querySelectorAll('[loop]'),
+      },
+      {
+        attribute: this.bindAttribute,
+        elements: customElement.querySelectorAll(
+          `[${this.bindAttribute}]`
+        ),
+      },
+    ].forEach((data) => {
+      data.elements.forEach((element) => {
+        binderDoms.push(element);
+        let uid = (Date.now() + Math.random()).toString(36);
+        _this.uids.push(uid);
+        if (
+          !Object.prototype.hasOwnProperty.call(element, 'creamie')
+        ) {
+          element.creamie = {
+            attributes: [],
+          };
+        }
+        let property = element.getAttribute(data.attribute);
+        element.creamie.attributes.push({
+          name: data.attribute,
+          value: property,
+        });
+        element.creamie[uid] = {
+          attribute: data.attribute,
+          property: property,
+        };
+        element.removeAttribute(data.attribute);
       });
     });
-    _this.domCache = [..._this.domCache, ...binderDoms];
+    this.domCache = [..._this.domCache, ...binderDoms];
     let tempData = {};
     if (type == 'reinit') {
-      tempData = {
-        domCache: binderDoms,
-        attributeIndex: _this.attributeMap.length - 1,
-      };
+      tempData.domCache = binderDoms;
+      tempData.uidIndex = _this.uids.length - 1;
     } else {
-      tempData = {
-        domCache: _this.domCache,
-        attributeIndex: 0,
-      };
+      tempData.domCache = this.domCache;
+      tempData.uidIndex = 0;
     }
     tempData.domCache.forEach((element) => {
-      let attribute = _this.attributeMap[tempData.attributeIndex++];
-      let property = element.getAttribute(attribute);
-      _this.propertyMap.push(property);
+      let uid = _this.uids[tempData.uidIndex++];
+      let attribute = element.creamie[uid].attribute;
+      let property = element.creamie[uid].property;
       if (
         _this.pluginConnector.isMatched({
           element: element,
           property: property,
           type: 'getter',
           attribute: attribute,
+          uid: uid,
         })
       ) {
         _this.pluginConnector.getter();
@@ -99,6 +120,7 @@ export default class Binder {
               property: property,
               cache: _this.dataCache[property],
               allCache: _this.dataCache,
+              uid: uid,
             });
             if (getterObj.condition === true) {
               getterObj.method();
@@ -113,33 +135,36 @@ export default class Binder {
         }
       }
       _this.addScopes(property);
-      if (attribute != 'if' && attribute != 'loop') {
-        element.removeAttribute(_this.bindAttribute);
-      }
     });
   }
 
-  addScopes(property) {
+  addScopes(scopeProperty) {
     let _this = this;
     if (
-      !Object.prototype.hasOwnProperty.call(_this.scopes, property)
+      !Object.prototype.hasOwnProperty.call(
+        _this.scopes,
+        scopeProperty
+      )
     ) {
       let currentValue;
-      Object.defineProperty(_this.scopes, property, {
+      Object.defineProperty(_this.scopes, scopeProperty, {
         set: function (newValue) {
           currentValue = newValue;
           if (!(currentValue instanceof ArrayObserverType)) {
             _this.domCache.forEach((element, index) => {
-              let attribute = _this.attributeMap[index];
-              if (_this.propertyMap[index] == property) {
+              let uid = _this.uids[index];
+              let attribute = element.creamie[uid].attribute;
+              let property = element.creamie[uid].property;
+              if (property == scopeProperty) {
                 if (
                   _this.pluginConnector.isMatched({
                     element: element,
-                    property: property,
+                    property: scopeProperty,
                     type: 'setter',
                     currentValue: currentValue,
-                    oldValue: _this.scopes[property],
+                    oldValue: _this.scopes[scopeProperty],
                     attribute: attribute,
+                    uid: uid,
                   })
                 ) {
                   _this.pluginConnector.setter();
@@ -149,9 +174,10 @@ export default class Binder {
                       currentValue: currentValue,
                       element: element,
                       data: _this.scopes,
-                      property: property,
-                      cache: _this.dataCache[property],
+                      property: scopeProperty,
+                      cache: _this.dataCache[scopeProperty],
                       allCache: _this.dataCache,
+                      uid: uid,
                     },
                     'setterMethods'
                   );
@@ -204,6 +230,29 @@ export default class Binder {
       }
     }
     return passed;
+  }
+
+  getCreamieNodes(element, attribute) {
+    const nodeIterator = document.createNodeIterator(
+      element,
+      NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode(node) {
+          return node.creamie &&
+            node.creamie.attributes.find((data) => {
+              return data.name == attribute;
+            })
+            ? NodeFilter.FILTER_ACCEPT
+            : NodeFilter.FILTER_REJECT;
+        },
+      }
+    );
+    const nodes = [];
+    let currentNode;
+    while ((currentNode = nodeIterator.nextNode())) {
+      nodes.push(currentNode);
+    }
+    return nodes;
   }
 
   free() {

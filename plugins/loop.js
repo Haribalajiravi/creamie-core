@@ -1,7 +1,7 @@
 import { ArrayObserver } from './../arrayobserver.js';
 
 export default class Loop {
-  constructor(binder) {
+  constructor() {
     this.loopAttribute = 'loop';
     this.loopItemAttribute = 'el';
     this.cloneCopy = {};
@@ -9,7 +9,6 @@ export default class Loop {
     this.array = {};
     this.elementList = {};
     this.elementItemList = {};
-    this.binder = binder;
   }
 
   get({ element, property, dataCache }) {
@@ -19,7 +18,8 @@ export default class Loop {
     if (this.cloneCopy[property] == undefined) {
       this.cloneCopy[property] = new Map();
     }
-    this.cloneCopy[property].set(element, element.cloneNode(true));
+    let clonedElement = element.cloneNode(true);
+    this.cloneCopy[property].set(element, clonedElement);
     dataCache[property].set(element, {
       next: element.nextSibling,
       parent: element.parentNode,
@@ -117,7 +117,6 @@ export default class Loop {
       }
       newElement.removeAttribute(this.loopAttribute);
       rootFragment.append(newElement);
-      this.binder.initListener(newElement, 'reinit');
     }
     this.elementList[property].set(element, elementList);
     this.elementItemList[property].set(element, elementItemList);
@@ -207,15 +206,15 @@ export default class Loop {
    * @param {object} param0
    * element [current DOM element]
    */
-  isMatched({ element, currentValue, attribute }) {
+  isMatched({ element, currentValue, attribute, uid }) {
     return {
       getter:
-        element.hasAttribute(this.loopAttribute) &&
+        element.creamie[uid].attribute == this.loopAttribute &&
         attribute == this.loopAttribute
           ? true
           : false,
       setter:
-        element.hasAttribute(this.loopAttribute) &&
+        element.creamie[uid].attribute == this.loopAttribute &&
         attribute == this.loopAttribute &&
         Array.isArray(currentValue)
           ? true

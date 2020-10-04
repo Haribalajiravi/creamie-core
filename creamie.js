@@ -19,7 +19,7 @@ export default class Creamie extends HTMLElement {
     this.dom.appendChild(template.get());
     this.binder = new Binder({
       bindAttribute: this.component.binder,
-      customElement: this.dom,
+      customElement: this.dom.querySelector('body'),
       getterMethods: component.getterMethods,
       setterMethods: component.setterMethods,
       destroyMethods: component.destroyMethods,
@@ -32,11 +32,5 @@ export default class Creamie extends HTMLElement {
   disconnectedCallback() {
     this.events.removeListeners();
     this.binder.free();
-  }
-
-  attributeChangedCallback(name, oldVal, newVal) {
-    console.log(
-      `Attribute: ${name} - ${newVal} - ${oldVal} changed!`
-    );
   }
 }

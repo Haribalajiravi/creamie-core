@@ -11,7 +11,7 @@ class PluginConnector {
    * dataCache, [extra data source to maintain operations and destroy in future]
    * excludePlugins, [Default plugin classes to neglect while binding]
    */
-  constructor({ scopes, dataCache, excludePlugins, binder }) {
+  constructor({ scopes, dataCache, excludePlugins }) {
     this.scopes = scopes;
     this.dataCache = dataCache;
     this.excludePlugins =
@@ -20,7 +20,7 @@ class PluginConnector {
         : [];
     this.plugins = [
       new If(),
-      new Loop(binder),
+      new Loop(),
       new TextField(),
       new Select(),
     ];
@@ -46,6 +46,7 @@ class PluginConnector {
     currentValue,
     attribute,
     oldValue,
+    uid,
   }) {
     let matchUpObj = {
       element: element,
@@ -55,6 +56,7 @@ class PluginConnector {
       currentValue: currentValue,
       oldValue: oldValue,
       attribute: attribute,
+      uid: uid,
     };
     // Exclude all given default plugins if anything have
     let intersectedPlugins = this.pluginIntersector();
@@ -80,6 +82,7 @@ class PluginConnector {
       scopes: elementGetter.scopes,
       property: elementGetter.property,
       dataCache: elementGetter.dataCache,
+      uid: elementGetter.uid,
     });
   }
 
@@ -95,6 +98,7 @@ class PluginConnector {
       property: elementSetter.property,
       dataCache: elementSetter.dataCache,
       oldValue: elementSetter.oldValue,
+      uid: elementSetter.uid,
     });
   }
 
@@ -130,6 +134,7 @@ class PluginConnector {
       scopes: elementDestroyer.scopes,
       dataCache: elementDestroyer.dataCache,
       property: elementDestroyer.property,
+      uid: elementDestroyer.uid,
     });
   }
 }

@@ -41,15 +41,15 @@ export default class If {
    * @param {object} param0
    * element [current DOM element]
    */
-  isMatched({ element, currentValue, attribute }) {
+  isMatched({ element, currentValue, attribute, uid }) {
     return {
       getter:
-        element.hasAttribute(this.ifAttribute) &&
+        element.creamie[uid].attribute == this.ifAttribute &&
         attribute == this.ifAttribute
           ? true
           : false,
       setter:
-        element.hasAttribute(this.ifAttribute) &&
+        element.creamie[uid].attribute == this.ifAttribute &&
         attribute == this.ifAttribute &&
         typeof currentValue == 'boolean'
           ? true

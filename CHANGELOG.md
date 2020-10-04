@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.1.3 (October 04, 2020)
+
+### Performance improvements
+
+* Binder DOM traversing start from component body
+* Removed binder attributes and properties from HTMLElements and storing it's detail in DOM object
+* Stopped reinitializing binder at loop directive which will avoid orphan DOM object on domCache when manipulating loop directive scopes 
+
 ## 0.1.2 (September 12, 2020)
 
 ### Performance fix - (Loop Directive)

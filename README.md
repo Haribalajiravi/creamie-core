@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Haribalajiravi/creamie.svg?branch=master)](https://travis-ci.org/Haribalajiravi/creamie) [![Download](https://img.shields.io/npm/dt/@creamie/core.svg)](https://npmcharts.com/compare/@creamie/core?minimal=true) [![GitHub issues](https://img.shields.io/github/issues/Haribalajiravi/creamie)](https://github.com/Haribalajiravi/creamie/issues) [![CodeFactor](https://www.codefactor.io/repository/github/haribalajiravi/creamie/badge/master)](https://www.codefactor.io/repository/github/haribalajiravi/creamie/overview/master) [![Gitter](https://badges.gitter.im/creamie-cli/community.svg)](https://gitter.im/creamie-cli/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) 
 
-[![version](https://img.shields.io/npm/v/@creamie/core.svg?style=for-the-badge)](https://www.npmjs.com/package/@creamie/core) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT) [![Become a patreon](https://img.shields.io/badge/%20-Become%20a%20patreon%3F-%23555555?logo=patreon&style=for-the-badge)](https://www.patreon.com/haribalajiravi) [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Haribalajiravi/creamie)
+[![version](https://img.shields.io/npm/v/@creamie/core.svg?style=for-the-badge)](https://www.npmjs.com/package/@creamie/core) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT) [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Haribalajiravi/creamie)
 
 Support through below platforms:
 
