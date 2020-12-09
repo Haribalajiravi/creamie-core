@@ -72,6 +72,17 @@ test('Loop: directive one push test', async (t) => {
     .eql('creamie');
 });
 
+test('Loop: preprocessor', async (t) => {
+  await t
+    .click('#add-data')
+    .expect(Selector('#item-index').innerText)
+    .eql('1');
+  await t
+    .click('#add-data')
+    .expect(Selector('#item-indexpp').innerText)
+    .eql('2');
+});
+
 /**
  * Plugins
  */

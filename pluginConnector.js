@@ -24,6 +24,13 @@ class PluginConnector {
       new TextField(),
       new Select(),
     ];
+    this.pluginExtras = {};
+    let _this = this;
+    this.plugins.forEach((plugin) => {
+      if (plugin.name && plugin.methods) {
+        _this.pluginExtras[plugin.name] = plugin.methods;
+      }
+    });
     this.matchedCache = {
       getter: {},
       setter: {},

@@ -44,11 +44,13 @@ export default class If {
   isMatched({ element, currentValue, attribute, uid }) {
     return {
       getter:
+        element.creamie[uid] &&
         element.creamie[uid].attribute == this.ifAttribute &&
         attribute == this.ifAttribute
           ? true
           : false,
       setter:
+        element.creamie[uid] &&
         element.creamie[uid].attribute == this.ifAttribute &&
         attribute == this.ifAttribute &&
         typeof currentValue == 'boolean'

@@ -40,7 +40,9 @@ export default class Events {
         if (targetElem) {
           let values = targetElem.split(':');
           let methodName = values[1];
-          _this.methods[methodName](e.target, e);
+          methodName &&
+            _this.methods[methodName] &&
+            _this.methods[methodName](e.target, e);
         }
       };
       _this.eventsCache[event] = eventController;

@@ -258,7 +258,8 @@ export default class Binder {
   free() {
     let _this = this;
     this.domCache.forEach((element, index) => {
-      let property = _this.propertyMap[index];
+      let uid = _this.uids[index];
+      let property = element.creamie[uid].property;
       if (
         _this.pluginConnector.isMatched({
           element: element,
@@ -289,6 +290,10 @@ export default class Binder {
 
   get() {
     return this.scopes;
+  }
+
+  getPluginMethods() {
+    return this.pluginConnector.pluginExtras;
   }
 
   getError(key, name) {

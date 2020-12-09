@@ -7,6 +7,10 @@ export default class App extends Creamie {
   constructor() {
     super(AppConfig);
     let _this = this;
+    this.loop.setPreprocessor((data, index) => {
+      data.index = index+1;
+      data.indexpp = index + 2;
+    });
     this.events.init({
       changeData: function (e) {
         _this.data.name = 'Data Changed';

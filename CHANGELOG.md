@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 0.1.4 (December 10, 2020)
+
+### Issue Fix & Valuable feature
+
+* Issue on binder 'free' method for default and custom plugins as well
+* Event related unwanted console error
+* Finally, a new valuable extra feature on 'loop' which is called 'setPreprocessor'
+
 ## 0.1.3 (October 04, 2020)
 
 ### Performance improvements

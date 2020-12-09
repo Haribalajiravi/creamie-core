@@ -27,6 +27,11 @@ export default class Creamie extends HTMLElement {
     });
     this.data = this.binder.get();
     this.events = new Events(this.dom);
+    let _this = this;
+    let pluginMethods = this.binder.getPluginMethods();
+    Object.keys(pluginMethods).forEach((pluginName) => {
+      _this[pluginName] = pluginMethods[pluginName];
+    });
   }
 
   disconnectedCallback() {

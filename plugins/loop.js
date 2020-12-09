@@ -2,6 +2,7 @@ import { ArrayObserver } from './../arrayobserver.js';
 
 export default class Loop {
   constructor() {
+    this.name = 'loop';
     this.loopAttribute = 'loop';
     this.loopItemAttribute = 'el';
     this.cloneCopy = {};
@@ -9,6 +10,13 @@ export default class Loop {
     this.array = {};
     this.elementList = {};
     this.elementItemList = {};
+    this.preProcessor = undefined;
+    let _this = this;
+    this.methods = {
+      setPreprocessor(method) {
+        _this.preProcessor = method;
+      },
+    };
   }
 
   get({ element, property, dataCache }) {
@@ -169,6 +177,7 @@ export default class Loop {
    * @param {number} index
    */
   insertData(obj, property, index, element) {
+    this.preProcessor && this.preProcessor(obj, index);
     let elementList = this.elementItemList[property].get(element);
     elementList[index].forEach((elData) => {
       let data = obj[elData.property];
@@ -209,11 +218,13 @@ export default class Loop {
   isMatched({ element, currentValue, attribute, uid }) {
     return {
       getter:
+        element.creamie[uid] &&
         element.creamie[uid].attribute == this.loopAttribute &&
         attribute == this.loopAttribute
           ? true
           : false,
       setter:
+        element.creamie[uid] &&
         element.creamie[uid].attribute == this.loopAttribute &&
         attribute == this.loopAttribute &&
         Array.isArray(currentValue)
