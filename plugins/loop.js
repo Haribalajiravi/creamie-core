@@ -10,13 +10,7 @@ export default class Loop {
     this.array = {};
     this.elementList = {};
     this.elementItemList = {};
-    this.preProcessor = undefined;
-    let _this = this;
-    this.methods = {
-      setPreprocessor(method) {
-        _this.preProcessor = method;
-      },
-    };
+    this.methods = {};
   }
 
   get({ element, property, dataCache }) {
@@ -37,6 +31,10 @@ export default class Loop {
     this.elementItemList[property] = new Map();
     this.array[property] = new Map();
     element.remove();
+    this.methods[property] = {};
+    this.methods[property].setPreprocessor = (method) => {
+      this.methods[property].preProcessor = method;
+    };
   }
 
   /**
@@ -177,7 +175,9 @@ export default class Loop {
    * @param {number} index
    */
   insertData(obj, property, index, element) {
-    this.preProcessor && this.preProcessor(obj, index);
+    this.methods[property] &&
+      this.methods[property].preProcessor &&
+      this.methods[property].preProcessor(obj, index);
     let elementList = this.elementItemList[property].get(element);
     elementList[index].forEach((elData) => {
       let data = obj[elData.property];

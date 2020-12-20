@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.1.5 (December 20, 2020)
+
+### Issue Fix
+
+* Made a seperate preprocessor for each binder scope
+
 ## 0.1.4 (December 10, 2020)
 
 ### Issue Fix & Valuable feature

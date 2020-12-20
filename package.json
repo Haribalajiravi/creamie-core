@@ -1,13 +1,16 @@
 {
   "name": "@creamie/core",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Javascript Framework with Web Component Life Cycles, Bindings, Directives, Routing and Events etc...",
   "main": "creamie.js",
   "scripts": {
     "test": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
     "test:headed": "testcafe chrome,firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
     "test:server": "node tests/boot-runner.js && http-server",
-    "test:standalone": "testcafe chrome,firefox tests/testcases/",
+    "test:firefox": "testcafe firefox tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+    "test:chrome": "testcafe chrome tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+    "test:firefox:headless": "testcafe 'firefox:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
+    "test:chrome:headless": "testcafe 'chrome:headless' tests/testcases/ --app 'node tests/boot-runner.js && http-server'",
     "list-browsers": "testcafe --list-browsers",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

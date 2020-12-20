@@ -7,7 +7,7 @@ export default class App extends Creamie {
   constructor() {
     super(AppConfig);
     let _this = this;
-    this.loop.setPreprocessor((data, index) => {
+    this.loop.items.setPreprocessor((data, index) => {
       data.index = index+1;
       data.indexpp = index + 2;
     });
