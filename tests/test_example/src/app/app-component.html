@@ -9,6 +9,15 @@
     <div>
         <button id="event-click" e="click:changeData">Click me!</button>
     </div>
+    <!-- Event bubble -->
+    <div>
+        <button id="outside-btn" e="click:outClick">
+            Outisde
+            <div style="width:100px" id="inside-btn" e="click:inClick">Inside</div>
+        </button>
+        <input id="stop-propagate" type="checkbox" > Stop propagate
+        <div id="bubble-data"></div>
+    </div>
     <!-- Router -->
     <div>
         <a route-to="/tester" id="router-test">test</a>

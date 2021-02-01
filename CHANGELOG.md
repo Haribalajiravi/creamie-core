@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.1.6 (February 01, 2021)
+
+### Issue Fix
+
+* Allowing event bubbling on events
+
 ## 0.1.5 (December 20, 2020)
 
 ### Issue Fix

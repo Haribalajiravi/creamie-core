@@ -12,9 +12,8 @@ export default class App extends Creamie {
       data.indexpp = index + 2;
     });
     this.events.init({
-      changeData: function (e) {
+      changeData: function () {
         _this.data.name = 'Data Changed';
-        console.log(this, e);
       },
       setRouterParam: function () {
         console.log(_this.router);
@@ -38,6 +37,15 @@ export default class App extends Creamie {
           itemName: 'creamie',
         });
       },
+      inClick: function (current, event) {
+        document.getElementById('bubble-data').innerText = '1';
+        if(document.getElementById('stop-propagate').checked) {
+          event.stopPropagation();
+        }
+      },
+      outClick: function () {
+        document.getElementById('bubble-data').innerText = '2';
+      }
     });
     this.router = new Router('route-app', {
       '/tester': Exclude,

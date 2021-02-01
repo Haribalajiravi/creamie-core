@@ -36,14 +36,26 @@ export default class Events {
     let allEvents = Object.keys(_this.eventsCache);
     allEvents.forEach((event) => {
       let eventController = (e) => {
-        let targetElem = e.target.getAttribute(_this.eventAttribute);
-        if (targetElem) {
-          let values = targetElem.split(':');
+        let currentNode = e.target;
+        let parents = [];
+        while (currentNode.tagName != 'BODY') {
+          parents.push(currentNode);
+          currentNode = currentNode.parentNode;
+        }
+        let eventNodes = parents.filter((parent) =>
+          parent.hasAttribute(_this.eventAttribute)
+        );
+        eventNodes.forEach((eventNode) => {
+          let attrubuteValue = eventNode.getAttribute(
+            _this.eventAttribute
+          );
+          let values = attrubuteValue.split(':');
           let methodName = values[1];
-          methodName &&
+          !e.cancelBubble &&
+            methodName &&
             _this.methods[methodName] &&
             _this.methods[methodName](e.target, e);
-        }
+        });
       };
       _this.eventsCache[event] = eventController;
       _this.dom.addEventListener(event, eventController, true);

@@ -217,8 +217,8 @@ class App extends Creamie {
     constructor() {
         super(AppConfig);
         this.events.init({
-            execute: function (e) {
-                console.log(this, e);
+            execute: function (target, e) {
+                console.log(target, e);
                 alert('Execute method fired!');
             }
         });

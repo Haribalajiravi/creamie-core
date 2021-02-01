@@ -25,6 +25,23 @@ test('Events: click event', async (t) => {
     .eql('Data Changed');
 });
 
+/** Event bubbling */
+test('Events: click event', async (t) => {
+  await t
+    .click('#inside-btn')
+    .expect(Selector('#bubble-data').innerText)
+    .eql('2');
+});
+
+/** Event bubbling */
+test('Events: click event', async (t) => {
+  await t
+    .click('#stop-propagate')
+    .click('#inside-btn')
+    .expect(Selector('#bubble-data').innerText)
+    .eql('1');
+});
+
 /**
  * If directive - hide
  */
