@@ -18,7 +18,7 @@ test('Binder: input value reflection in dom', async (t) => {
 /**
  * Events
  */
-test('Events: click event', async (t) => {
+test('Events: basic click event', async (t) => {
   await t
     .click('#event-click')
     .expect(Selector('#binder-reflecter').innerText)
@@ -26,15 +26,15 @@ test('Events: click event', async (t) => {
 });
 
 /** Event bubbling */
-test('Events: click event', async (t) => {
+test('Events: event bubbling', async (t) => {
   await t
     .click('#inside-btn')
     .expect(Selector('#bubble-data').innerText)
     .eql('2');
 });
 
-/** Event bubbling */
-test('Events: click event', async (t) => {
+/** Event propagation */
+test('Events: stop propagation', async (t) => {
   await t
     .click('#stop-propagate')
     .click('#inside-btn')
