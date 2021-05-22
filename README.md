@@ -256,6 +256,7 @@ index.html:
 - [Ahilesh](https://twitter.com/KumarAhilesh) (Content Writer)
 
 ## Example
+- [Snake game](https://snake.creamie.io)
 - [Checklist app](https://github.com/Haribalajiravi/creamie-checklist-example)
 
 ## Copyrights
