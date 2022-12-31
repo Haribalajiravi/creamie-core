@@ -44,7 +44,7 @@
     "http-server": "^14.0.0",
     "husky": "^7.0.4",
     "prettier": "^2.0.5",
-    "testcafe": "^1.16.1"
+    "testcafe": "^15.1.317922"
   },
   "publishConfig": {
     "access": "public"
