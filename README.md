@@ -21,7 +21,7 @@ To use this as library try below command:
 
 ## Check out official framework docs below
 
-**[https://creamie.io](https://creamie.io/)**
+**[https://creamie.io](https://creamie.vercel.app/)**
 
 ## Feature currently available
 
